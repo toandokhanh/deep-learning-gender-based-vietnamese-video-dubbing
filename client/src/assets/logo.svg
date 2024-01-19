@@ -1,0 +1,17 @@
+<svg
+  width="100"
+  height="100"
+  viewBox="0 0 100 100"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <circle cx="50" cy="50" r="45" fill="#FF5733" />
+  <rect x="42" y="30" width="16" height="40" fill="white" />
+  <circle cx="50" cy="50" r="8" fill="white" />
+  <path
+    fillRule="evenodd"
+    clipRule="evenodd"
+    d="M51.1531 41.3996V59.6776C52.3466 60.469 54.0001 59.7649 54.0001 58.2395V42.8376C54.0001 41.3122 52.3466 40.6081 51.1531 41.3996ZM47.3596 39.8301V60.242H48.826V39.8301H47.3596Z"
+    fill="#FF5733"
+  />
+</svg>
