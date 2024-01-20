@@ -19,7 +19,7 @@ const videosSchema = new mongoose.Schema({
     type: ObjectId,
     ref: 'ResultSubtitle'
   },
-});
+},{ timestamps: true });
 
 const Video = mongoose.model('Video', videosSchema);
 

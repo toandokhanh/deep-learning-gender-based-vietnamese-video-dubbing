@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
 const Language = require('../../../app/models/Language');
-const url = process.env.MONGODB_URL || 'mongodb://localhost:27017/ct551_v2';
+const url = process.env.MONGODB_URL || 'mongodb://localhost:27017/ct551_v3';
 
 const dataLanguage = [
+  {
+    id: 'auto',
+    name: 'Tự động nhận dạng ngôn ngữ (default)'
+  },
   {
     id: 'vi',
     name: 'Tiếng Việt'

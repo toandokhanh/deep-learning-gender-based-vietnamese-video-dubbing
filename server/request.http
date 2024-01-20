@@ -111,7 +111,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGQ1Z
 
 
 
-### 19/1/2024  video, sourceLanguage, rate, volume, gender, adSubtitle
+### 19/1/2024  video, sourceLanguage, type, rate, volume, gender, adSubtitle
 # "type": "google-cloud" hoac "openai-whisper"
 
 POST http://localhost:5000/api/video/create/subtitle/v1
@@ -119,10 +119,28 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWFhNzZmYTM5YzNkNDAwY2I5N2JhOGMiLCJpYXQiOjE3MDU2NzAzOTR9.qhov3mNQIlNsVezUfwe1evGZepAZ3P0Nxbzm7WNLnj0
 
 {
-  "video": "cb947579.mp4",
-  "sourceLanguage": "en", 
-  "adSubtitle": "True",
-  "type": "google-cloud"
+  "video": "bbc.mp4",
+  "type": "openai-whisper",
+  "gender": "female",
+  "adSubtitle": true
 }
 
+#### lấy ra toàn bộ video
+GET http://localhost:5000/api/video/getallvideo/subtitle
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWFhNzZmYTM5YzNkNDAwY2I5N2JhOGMiLCJpYXQiOjE3MDU2NzAzOTR9.qhov3mNQIlNsVezUfwe1evGZepAZ3P0Nxbzm7WNLnj0
 
+
+#### lấy ra toàn bộ chi tiết 1 video
+GET http://localhost:5000/api/video/get/subtitle/detail/20240119_150954
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWFhNzZmYTM5YzNkNDAwY2I5N2JhOGMiLCJpYXQiOjE3MDU2NzAzOTR9.qhov3mNQIlNsVezUfwe1evGZepAZ3P0Nxbzm7WNLnj0
+
+
+
+
+#####
+
+GET http://localhost:5000/api/langauge/getall
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWFhNzZmYTM5YzNkNDAwY2I5N2JhOGMiLCJpYXQiOjE3MDU2NzAzOTR9.qhov3mNQIlNsVezUfwe1evGZepAZ3P0Nxbzm7WNLnj0

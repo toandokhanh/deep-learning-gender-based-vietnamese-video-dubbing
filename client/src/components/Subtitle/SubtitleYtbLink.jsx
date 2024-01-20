@@ -4,17 +4,17 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { apiUrl } from '../../contexts/constant';
 import CustomNavbar from '../Layout/CustomNavbar'
-function Subtitle() {
-  const [videoFile, setVideoFile] = useState('');
+
+function SubtitleYtbLink() {
   const [languages, setLanguages] = useState();
   const [sourceLanguage, setSourceLanguage] = useState('auto');
-  const [videoName, setVideoName] = useState('');
   const [algorithmSTT, setAlgorithmSTT] = useState('google-cloud');
   const [gender, setGender] = useState('auto');
   const [rate, setRate] = useState('auto');
   const [volume, setVolume] = useState('auto');
   const [loading, setLoading] = useState(false);
   const [adSubtitle, setAdSubtitle] = useState(false);
+  const [videoLink, setVideoLink] = useState('');
   const navigate = useNavigate();
   const spinnerStyle = {
     position: 'fixed',
@@ -31,56 +31,51 @@ function Subtitle() {
     justifyContent: 'center',
     alignItems: 'center'
   };
-  const handleVideoFile = (e) => {
-    setVideoFile(e.target.files[0]);
-    setVideoName(e.target.files[0].name);
-  };
 
+  // Function to check if the input is a valid YouTube link
+  const isValidYouTubeLink = (link) => {
+    const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com\/(embed\/|v\/|watch\?v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    return youtubeRegex.test(link);
+  };
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
-    const formData = new FormData();
-    formData.append('inputFile', videoFile);
-    if (videoFile.type !== 'video/mp4') {
-      alert('Selected file is not a video MP4');
-      setLoading(false);
-      return;
-    }
-    // call API save video file
-    fetch(`${apiUrl}/upload/video`, {
-      method: 'POST',
-      body: formData,
-    });
-    // call API create subtitle video | video, sourceLanguage, type, rate, volume, gender, adSubtitle
-    const videoForm = {
-      video: videoName,
-      sourceLanguage,
-      type:algorithmSTT,
-      rate,
-      volume,
-      gender,
-      adSubtitle
-    };
-    const isAuto = value => value === 'auto';
-    const filteredVideoForm = {};
-    Object.keys(videoForm).forEach(key => {
-      const value = videoForm[key];
-      if (!isAuto(value)) {
-        filteredVideoForm[key] = value;
-      }
-    });
-    console.log(filteredVideoForm);
-    try {
-      const response = await axios.post(`${apiUrl}/video/create/subtitle/v1`, filteredVideoForm);
-      if (response.data.success) {
-        console.log(response.data.newVideo.date_time);
+    if (isValidYouTubeLink(videoLink)){
+        const videoForm = {
+            video: videoLink,
+            sourceLanguage,
+            type:algorithmSTT,
+            rate,
+            volume,
+            gender,
+            adSubtitle
+        };
+        const isAuto = value => value === 'auto';
+        const filteredVideoForm = {};
+        Object.keys(videoForm).forEach(key => {
+        const value = videoForm[key];
+        if (!isAuto(value)) {
+            filteredVideoForm[key] = value;
+        }
+        });
+        console.log(filteredVideoForm);
+        try {
+        const response = await axios.post(`${apiUrl}/video/create/subtitle/v1`, filteredVideoForm);
+        if (response.data.success) {
+            console.log(response.data.newVideo.date_time);
+            setLoading(false);
+            navigate('/video/subtitle/detail/'+response.data.newVideo.date_time);
+        }
+        } catch (error) {
+        console.error('Error:', error);
         setLoading(false);
-        navigate('/video/subtitle/detail/'+response.data.newVideo.date_time);
+        } 
+    }else {
+        // Invalid YouTube link, handle accordingly
+        console.log('Invalid YouTube link:', videoLink);
       }
-    } catch (error) {
-      console.error('Error:', error);
-      setLoading(false);
-    } 
+    
   };
 
   useEffect(() => {
@@ -92,16 +87,26 @@ function Subtitle() {
         console.error(error);
       });
   }, []);
+  const handleVideoLink = (e) => {
+    const inputLink = e.target.value;
+    setVideoLink(inputLink);
+  };
   return (
     <>
         <CustomNavbar />
         <div className='container-video'>
-        <h2>Craft Voice-Over Videos Using Video Files</h2>
+        <h2>Create Video Subtitles With Youtube Link</h2>
         <br />
         <Form onSubmit={handleSubmit}>
             <Form.Group>
-            <Form.Label>Chọn một tệp video *</Form.Label>
-            <Form.Control type="file" accept="video/*" onChange={handleVideoFile} required />
+            <Form.Label>Nhập liên kết YouTube *</Form.Label>
+            <Form.Control
+            type="text"
+            placeholder="Nhập liên kết YouTube"
+            onChange={handleVideoLink}
+            value={videoLink}
+            required
+            />
             </Form.Group>
 
             <Form.Group>
@@ -135,7 +140,6 @@ function Subtitle() {
                 <option value="20">20</option>
             </Form.Control>
             </Form.Group>
-
 
             <Form.Group>
             <Form.Label>Chọn âm lượng của người đọc</Form.Label>
@@ -201,4 +205,4 @@ function Subtitle() {
   );
 }
 
-export default Subtitle;
+export default SubtitleYtbLink;

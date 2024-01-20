@@ -20,26 +20,14 @@ const CustomNavbar = () => {
           height="30"
           className="d-inline-block align-top rounded-circle me-2"
         />
-        SubVidSumary
+        VideoGenerator
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link style={{ color: "#ffffff" }} as={Link} to="/subtitle">Subtitles</Nav.Link>
-            <Nav.Link style={{ color: "#ffffff" }} as={Link} to="/summary">Summary</Nav.Link>
-            <Nav.Link style={{ color: "#ffffff" }} href="https://github.com/toandokhanh/TextVidSummarizer" target="_blank">Github</Nav.Link>
-            {/* <Dropdown>
-              <Dropdown.Toggle style={{ backgroundColor: "#563D7C", border: 'none', marginTop: '2px' }} id="user-dropdown">
-                Services
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item as={Link} to='/subtitle'>Video subtitles</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item>Video narration</Dropdown.Item> 
-                <Dropdown.Divider />
-                <Dropdown.Item as={Link} to='/summary'>Categorize topics and summarize Video</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown> */}
+            <Nav.Link style={{ color: "#ffffff" }} as={Link} to="/subtitle/video-files">Video Files</Nav.Link>
+            <Nav.Link style={{ color: "#ffffff" }} as={Link} to="/subtitle/youtube-link">Youtube Link</Nav.Link>
+            {/* <Nav.Link style={{ color: "#ffffff" }} as={Link} to="/about">About</Nav.Link> */}
           </Nav>
           <Nav>
             <Dropdown>
@@ -54,10 +42,6 @@ const CustomNavbar = () => {
                 {fullname}
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                <Dropdown.Item>User Info</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item as={Link} to="/history/summary">Your summary</Dropdown.Item>
-                <Dropdown.Divider />
                 <Dropdown.Item as={Link} to="/history/subtitle">Your subtitle</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
