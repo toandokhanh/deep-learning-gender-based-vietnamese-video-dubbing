@@ -62,7 +62,7 @@ class VideoController{
             // all good
             return res
                 .status(200)
-                .json({ success: true, message: 'ok' , result:videoResult, NoiseReductionName: NoiseReductionId.name})
+                .json({ success: true, message: 'ok' , result:videoResult})
         } catch (error) {
             console.log(error);
                     res.status(500).json({success: false, message:'Internal Server Error'});
@@ -73,9 +73,9 @@ class VideoController{
     async createSubtitle(req, res) {
         try {
             const { video, sourceLanguage, type, rate, volume, gender, adSubtitle } = req.body;
-            console.log(type)
+            console.log(req.body)
             // Simple validation
-            if (!video || !sourceLanguage|| !type) {
+            if (!video || !type) {
                 return res.status(400).json({ success: false, message: 'Lack of information' });
             }
     
@@ -127,21 +127,21 @@ class VideoController{
                                 return res
                                     .status(400)
                                     .json({ success: false, message: 'Sevice not found!' })
-                            
-                            const newResultSubtitle = new ResultSubtitle({
-                                audio_original: extractFileNameFromPath(audio_original),
-                                srt_original: extractFileNameFromPath(srt_original),
-                                audio_filtered: extractFileNameFromPath(audio_filtered),
-                                srt_translated: extractFileNameFromPath(srt_translated),
-                                srt_labeled: extractFileNameFromPath(srt_labeled),
-                                audio_described: extractFileNameFromPath(audio_described),
-                                audio_overlay_described: extractFileNameFromPath(audio_overlay_described),
-                                videoSubtitle: extractFileNameFromPath(videoSubtitle),
-                                video_explanation: extractFileNameFromPath(video_explanation),
-                                video_explanation_sub: extractFileNameFromPath(video_explanation_sub),
-                                execution_time: execution_time,
-                                type: type
-                            })
+                                const newResultSubtitle = new ResultSubtitle({
+                                    audio_original: extractFileNameFromPath(audio_original),
+                                    srt_original: extractFileNameFromPath(srt_original),
+                                    audio_filtered: extractFileNameFromPath(audio_filtered),
+                                    srt_translated: extractFileNameFromPath(srt_translated),
+                                    srt_labeled: extractFileNameFromPath(srt_labeled),
+                                    audio_described: extractFileNameFromPath(audio_described),
+                                    audio_overlay_described: extractFileNameFromPath(audio_overlay_described),
+                                    videoSubtitle: extractFileNameFromPath(videoSubtitle),
+                                    video_explanation: extractFileNameFromPath(video_explanation),
+                                    video_explanation_sub: video_explanation_sub ? extractFileNameFromPath(video_explanation_sub) : undefined,
+                                    execution_time: execution_time,
+                                    type: type
+                                });
+                                    
                             await newResultSubtitle.save();
     
                             const newVideo = new Video({

@@ -69,7 +69,7 @@ def main():
     os.makedirs(output_dir, exist_ok=True)
 
     if input_arg.startswith('https://www.youtube.com'):
-        video_path = download_youtube_video(input_arg, './downloads')
+        video_path = download_youtube_video(input_arg, '../public/videos')
         print("Video youtube đã được lưu vào: "+ video_path)
         path[0] = video_path
         input_arg = video_path
@@ -123,7 +123,7 @@ def main():
         print("path wav thuyết minh được phủ với wav gốc:", audiodescribed_wav_path)
         audiodescribed_video_path = overlay_audio_on_video.merge_video_and_audio(input_arg, audiodescribed_wav_path)
         print("path video thuyết minh:", audiodescribed_video_path)
-        
+        ad_subtitle_video_path= None
         if ad_subtitle_en:
             ad_subtitle_video_path  = createVideoOutput.createAudiodescribed(audiodescribed_video_path, srt_path)
             print("path video thuyết minh có phụ đề:", ad_subtitle_video_path)

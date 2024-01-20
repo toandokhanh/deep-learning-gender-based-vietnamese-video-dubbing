@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button, Alert, Spinner } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -6,11 +6,15 @@ import { apiUrl } from '../../contexts/constant';
 import CustomNavbar from '../Layout/CustomNavbar'
 function Subtitle() {
   const [videoFile, setVideoFile] = useState('');
-  const [sourceLanguage, setSourceLanguage] = useState('vi');
-  const [targetLanguage, setTargetLanguage] = useState('en');
+  const [languages, setLanguages] = useState();
+  const [sourceLanguage, setSourceLanguage] = useState('auto');
   const [videoName, setVideoName] = useState('');
-  const [algorithm, setAlgorithm] = useState('no');
+  const [algorithmSTT, setAlgorithmSTT] = useState('google-cloud');
+  const [gender, setGender] = useState('auto');
+  const [rate, setRate] = useState('auto');
+  const [volume, setVolume] = useState('auto');
   const [loading, setLoading] = useState(false);
+  const [adSubtitle, setAdSubtitle] = useState(false);
   const navigate = useNavigate();
   const spinnerStyle = {
     position: 'fixed',
@@ -47,15 +51,27 @@ function Subtitle() {
       method: 'POST',
       body: formData,
     });
-    // call API create summary text
+    // call API create subtitle video | video, sourceLanguage, type, rate, volume, gender, adSubtitle
     const videoForm = {
       video: videoName,
       sourceLanguage,
-      targetLanguage,
-      algorithm,
+      type:algorithmSTT,
+      rate,
+      volume,
+      gender,
+      adSubtitle
     };
+    const isAuto = value => value === 'auto';
+    const filteredVideoForm = {};
+    Object.keys(videoForm).forEach(key => {
+      const value = videoForm[key];
+      if (!isAuto(value)) {
+        filteredVideoForm[key] = value;
+      }
+    });
+    console.log(filteredVideoForm);
     try {
-      const response = await axios.post(`${apiUrl}/video/create/subtitle`, videoForm);
+      const response = await axios.post(`${apiUrl}/video/create/subtitle/v1`, filteredVideoForm);
       if (response.data.success) {
         console.log(response.data.newVideo.date_time);
         setLoading(false);
@@ -67,42 +83,109 @@ function Subtitle() {
     } 
   };
 
+  useEffect(() => {
+    axios.get(`${apiUrl}/language/getall`)
+      .then((response) => {
+        setLanguages(response.data.languages);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, []);
   return (
     <>
         <CustomNavbar />
         <div className='container-video'>
-        <h2>Create Video Subtitles</h2>
+        <h2>Craft Voice-Over Videos Using Video Files</h2>
         <br />
         <Form onSubmit={handleSubmit}>
             <Form.Group>
-            <Form.Label>Choose a video file</Form.Label>
+            <Form.Label>Chọn một tệp video *</Form.Label>
             <Form.Control type="file" accept="video/*" onChange={handleVideoFile} required />
             </Form.Group>
 
             <Form.Group>
-            <Form.Label>Source language</Form.Label>
+            <Form.Label>Chọn ngôn gốc của video</Form.Label>
             <Form.Control as="select" value={sourceLanguage} onChange={(e) => setSourceLanguage(e.target.value)}>
-                <option value="vi">Vietnamese</option>
-                <option value="en">English</option>
+            {languages && languages.map((language, index) => (
+                <option key={index} value={language.id}>{language.name}</option>
+              ))}
             </Form.Control>
             </Form.Group>
 
             <Form.Group>
-            <Form.Label>Target language</Form.Label>
-            <Form.Control as="select" value={targetLanguage} onChange={(e) => setTargetLanguage(e.target.value)}>
-                <option value="vi">Vietnamese</option>
-                <option value="en">English</option>
+            <Form.Label>Chọn tỷ lệ của người đọc</Form.Label>
+            <Form.Control as="select" value={rate} onChange={(e) => setRate(e.target.value)}>
+                <option value="auto">Mặc định</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10 (recommended)</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+            </Form.Control>
+            </Form.Group>
+
+
+            <Form.Group>
+            <Form.Label>Chọn âm lượng của người đọc</Form.Label>
+            <Form.Control as="select" value={volume} onChange={(e) => setVolume(e.target.value)}>
+                <option value="auto">Mặc định</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40 (recommended)</option>
+                <option value="50">50</option>
+                <option value="60">60</option>
+                <option value="70">70</option>
+                <option value="80">80</option>
+                <option value="90">90</option>
+                <option value="100">100</option>
+                <option value="110">110</option>
+                <option value="120">120</option>
+                <option value="130">130</option>
+                <option value="140">140</option>
+                <option value="150">150</option>
+            </Form.Control>
+            </Form.Group>
+
+
+            <Form.Group>
+            <Form.Label>Chọn giới tính của người đọc</Form.Label>
+            <Form.Control as="select" value={gender} onChange={(e) => setGender(e.target.value)}>
+                <option value="auto">Tự động nhận dạng (default)</option>
+                <option value="female">Nữ</option>
+                <option value="male">Nam</option>
             </Form.Control>
             </Form.Group>
 
             <Form.Group>
-            <Form.Label>Noise reduction algorithm</Form.Label>
-            <Form.Control as="select" value={algorithm} onChange={(e) => setAlgorithm(e.target.value)}>
-                <option value="no">No algorithm</option>
-                <option value="deep">DeepFilterNet</option>
-                <option value="noise">NoiseReduce</option>
+            <Form.Label>Chọn phương pháp Speech-to-Text </Form.Label>
+            <Form.Control as="select" value={algorithmSTT} onChange={(e) => setAlgorithmSTT(e.target.value)}>
+                <option value="google-cloud">Google Cloud Speech-to-Text</option>
+                <option value="openai-whisper">Openai Whisper Speech-to-Text</option>
             </Form.Control>
             </Form.Group>
+            <br/>
+            <Form.Group>
+              <Form.Check 
+                type="checkbox" 
+                label="Tạo video thuyết minh có phụ đề ngôn ngữ gốc"
+                checked={adSubtitle}
+                onChange={(e) => setAdSubtitle(e.target.checked)}
+              />
+            </Form.Group>
+
             <br/>
             <Button variant="primary" type="submit">
             Submit
