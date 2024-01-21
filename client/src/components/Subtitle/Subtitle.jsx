@@ -47,40 +47,55 @@ function Subtitle() {
       return;
     }
     // call API save video file
-    fetch(`${apiUrl}/upload/video`, {
-      method: 'POST',
-      body: formData,
-    });
-    // call API create subtitle video | video, sourceLanguage, type, rate, volume, gender, adSubtitle
-    const videoForm = {
-      video: videoName,
-      sourceLanguage,
-      type:algorithmSTT,
-      rate,
-      volume,
-      gender,
-      adSubtitle
+    // Hàm chịu trách nhiệm cho việc gửi yêu cầu upload video và trả về Promise với tên file đã lưu
+    const uploadVideoAndGetFileName = async (formData) => {
+      try {
+        const response = await fetch(`${apiUrl}/upload/video`, {
+          method: 'POST',
+          body: formData,
+        });
+        const data = await response.json();
+        console.log('Server response:', data);
+        return data.fileName; // Trả về tên file đã lưu để sử dụng sau này
+      } catch (error) {
+        console.error('Error:', error);
+        throw error; // Re-throw lỗi để xử lý ở mức độ cao hơn (nếu cần)
+      }
     };
-    const isAuto = value => value === 'auto';
-    const filteredVideoForm = {};
-    Object.keys(videoForm).forEach(key => {
-      const value = videoForm[key];
-      if (!isAuto(value)) {
-        filteredVideoForm[key] = value;
-      }
-    });
-    console.log(filteredVideoForm);
     try {
-      const response = await axios.post(`${apiUrl}/video/create/subtitle/v1`, filteredVideoForm);
-      if (response.data.success) {
-        console.log(response.data.newVideo.date_time);
+      const videoName = await uploadVideoAndGetFileName(formData);
+      const videoForm = {
+        video: videoName,
+        sourceLanguage,
+        type: algorithmSTT,
+        rate,
+        volume,
+        gender,
+        adSubtitle,
+      };
+      const isAuto = value => value === 'auto';
+      const filteredVideoForm = {};
+      Object.keys(videoForm).forEach(key => {
+        const value = videoForm[key];
+        if (!isAuto(value)) {
+          filteredVideoForm[key] = value;
+        }
+      });
+      console.log(filteredVideoForm);
+      try {
+        const response = await axios.post(`${apiUrl}/video/create/subtitle/v1`, filteredVideoForm);
+        if (response.data.success) {
+          console.log(response.data.newVideo.date_time);
+          setLoading(false);
+          navigate('/video/subtitle/detail/'+response.data.newVideo.date_time);
+        }
+      } catch (error) {
+        console.error('Error:', error);
         setLoading(false);
-        navigate('/video/subtitle/detail/'+response.data.newVideo.date_time);
-      }
+      } 
     } catch (error) {
-      console.error('Error:', error);
-      setLoading(false);
-    } 
+      console.error('Error during video upload:', error);
+    }
   };
 
   useEffect(() => {
@@ -96,7 +111,7 @@ function Subtitle() {
     <>
         <CustomNavbar />
         <div className='container-video'>
-        <h2>Craft Voice-Over Videos Using Video Files</h2>
+        <h2>Create voiceover videos with video files</h2>
         <br />
         <Form onSubmit={handleSubmit}>
             <Form.Group>

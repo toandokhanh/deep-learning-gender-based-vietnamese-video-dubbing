@@ -42,7 +42,7 @@ const CustomNavbar = () => {
                 {fullname}
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                <Dropdown.Item as={Link} to="/history/subtitle">Your subtitle</Dropdown.Item>
+                <Dropdown.Item as={Link} to="/history/subtitle">Your Videos</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
               </Dropdown.Menu>

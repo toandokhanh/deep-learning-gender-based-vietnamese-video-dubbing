@@ -1,7 +1,9 @@
+//upload.js
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const fs = require('fs');
+const crypto = require('crypto'); // Import the crypto module for generating random strings
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -12,7 +14,11 @@ router.post('/video', upload.single('inputFile'), (req, res) => {
   }
   
   const videoData = req.file.buffer;
-  const fileName = req.file.originalname;
+  const originalFileName = req.file.originalname;
+  const fileExtension = originalFileName.split('.').pop(); // Extract file extension
+  const randomString = crypto.randomBytes(4).toString('hex'); // Generate a random 8-character string
+
+  const fileName = `${randomString}_${originalFileName}`; // Append random string to the original filename
   const uploadPath = './public/videos/' + fileName;
   
   if (req.file.mimetype !== 'video/mp4') {
@@ -26,10 +32,9 @@ router.post('/video', upload.single('inputFile'), (req, res) => {
     }
 
     console.log('Video saved successfully');
-    res.status(200).json({ message: 'Video uploaded and saved' });
+    console.log(uploadPath);
+    res.status(200).json({ message: 'Video uploaded and saved', fileName: fileName  });
   });
 });
-
-
 
 module.exports = router;
