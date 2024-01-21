@@ -28,7 +28,7 @@ const History = () => {
     <>
         <CustomNavbar />
         <div className="container mt-4">
-        <h3 style={{ textAlign:'center', margin:'30px 0' }}>HISTORY</h3>
+        <h3 style={{ textAlign:'center', margin:'30px 0' }}>YOUR VIDEOS</h3>
         <Table striped bordered hover>
           <thead>
             <tr>

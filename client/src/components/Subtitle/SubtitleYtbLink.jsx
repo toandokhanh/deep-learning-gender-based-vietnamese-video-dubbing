@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { apiUrl } from '../../contexts/constant';
 import CustomNavbar from '../Layout/CustomNavbar'
-
+import AlertMessage from '../Layout/AlertMessage'
 function SubtitleYtbLink() {
   const [languages, setLanguages] = useState();
   const [sourceLanguage, setSourceLanguage] = useState('auto');
@@ -15,6 +15,7 @@ function SubtitleYtbLink() {
   const [loading, setLoading] = useState(false);
   const [adSubtitle, setAdSubtitle] = useState(false);
   const [videoLink, setVideoLink] = useState('');
+  const [alert, setAlert] = useState(null)
   const navigate = useNavigate();
   const spinnerStyle = {
     position: 'fixed',
@@ -40,7 +41,7 @@ function SubtitleYtbLink() {
   
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setLoading(true);
+    
     if (isValidYouTubeLink(videoLink)){
         const videoForm = {
             video: videoLink,
@@ -59,6 +60,7 @@ function SubtitleYtbLink() {
             filteredVideoForm[key] = value;
         }
         });
+        setLoading(true);
         console.log(filteredVideoForm);
         try {
         const response = await axios.post(`${apiUrl}/video/create/subtitle/v1`, filteredVideoForm);
@@ -73,7 +75,8 @@ function SubtitleYtbLink() {
         } 
     }else {
         // Invalid YouTube link, handle accordingly
-        console.log('Invalid YouTube link:', videoLink);
+        setAlert({ type: 'danger', message: 'Invalid YouTube link: '+videoLink +' ???'})
+				setTimeout(() => setAlert(null), 5000)
       }
     
   };
@@ -94,8 +97,9 @@ function SubtitleYtbLink() {
   return (
     <>
         <CustomNavbar />
+        <AlertMessage info={alert} />
         <div className='container-video'>
-        <h2>Create Video Subtitles With Youtube Link</h2>
+        <h2>Create voiceover videos with Youtube Link</h2>
         <br />
         <Form onSubmit={handleSubmit}>
             <Form.Group>
