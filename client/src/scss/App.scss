@@ -6,9 +6,10 @@ h1{
     
 }
 .right {
+    margin-left: 70px;
+    margin-top: 5px;
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
     flex: 5;
   }
@@ -27,7 +28,6 @@ text-align: left;
 
 .left{
 display: flex;
-align-items: center;
 justify-content: center;
 flex-direction: column;
 flex: 4;
@@ -36,7 +36,7 @@ margin-right: 30px;
 }
 .container-video{
     max-width: 1200px;
-    margin: 100px auto;
+    margin: 50px auto;
     h2{
         text-align: center;
         text-transform: uppercase; 

@@ -9,9 +9,9 @@ function Footer() {
       <MDBContainer className="p-4">
         <MDBRow>
           <MDBCol lg="4" md="12" className="mb-4 mb-md-0">
-            <h5 className="text-uppercase">SubVidSumary</h5>
+            <h5 className="text-uppercase">VideoGenerator</h5>
             <p>
-            This is an internship project of mine with the desire to help businesses have an automatic system of classifying and summarizing video content with natural language processing methods.
+            This represents my graduation thesis project, aimed at automating the creation of subtitles and dubbing for videos, specifically tailored for the Vietnamese audience. The objective is to deliver valuable and highly accurate videos through a comprehensive system consisting of multiple robust modules.
             </p>
           </MDBCol>
           
@@ -44,7 +44,7 @@ function Footer() {
         </MDBRow>
       </MDBContainer>
       <div className="text-center p-3" style={{ backgroundColor: '#ffffff', color: '#000000' }}>
-        © {new Date().getFullYear()} SubVidSumary
+        © {new Date().getFullYear()} VideoGenerator
       </div>
     </MDBFooter>
   );

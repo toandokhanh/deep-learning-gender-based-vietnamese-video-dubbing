@@ -1,15 +1,12 @@
 import React, { useState , useEffect} from 'react';
-import { Table, Button, Form } from 'react-bootstrap';
+import { Table, Button, Container, Col } from 'react-bootstrap';
 import CustomNavbar from '../Layout/CustomNavbar'
-import SubtitleFrom from './SubtitleFrom'
 import { useParams } from 'react-router-dom';
 import { apiUrl } from '../../contexts/constant';
 import { SUBTITLE_FILE_API } from '../../contexts/constant';
-import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
 import '../../App.css'
 function SubtitleDetail() {
-  const navigate = useNavigate();
   const params = useParams();
   const [detailResult, setDetailResult] = useState();
   
@@ -27,7 +24,7 @@ function SubtitleDetail() {
   if (!detailResult) return <>
 
   </>
-  const {outputVideoPath, outputWavPath, srtPath, txtPath, wavPath} = detailResult.result
+  const {videoSubtitle, video_explanation, video_explanation_sub, srt_original, srt_translated, srt_labeled, audio_original, audio_filtered, audio_described, audio_overlay_described, execution_time, type} = detailResult.result
   return (
     <>
     <CustomNavbar/>
@@ -36,12 +33,8 @@ function SubtitleDetail() {
     <br/>
         <div>
             <div className="container" style={{ display: 'flex'}}>
-                {/* <div className="left" >
-                    <div id="wrapper" style={{ border: '3px solid black' }}>
-                    </div>
-                </div> */}
-                
                 <div className="left" >
+                <h4>Video gốc</h4>
                 <video className='video'
                     id="my-video-player"
                     style={{ border: '3px solid black' }}
@@ -50,11 +43,25 @@ function SubtitleDetail() {
                     controls
                 >
                     <source
-                    src={`${SUBTITLE_FILE_API}/${outputVideoPath}`}
+                    src={`${SUBTITLE_FILE_API}/${audio_original.split('.')[0]}.mp4`}
                     type="video/mp4"
                     />
                 </video>
-                <div style={{ display: 'flex', gap:'20px', marginTop:'10px' }}>
+                <br/>
+                <h4>Video phụ đề</h4>
+                <video className='video'
+                    id="my-video-player"
+                    style={{ border: '3px solid black' }}
+                    width="700"
+                    height="470"
+                    controls
+                >
+                    <source
+                    src={`${SUBTITLE_FILE_API}/${videoSubtitle}`}
+                    type="video/mp4"
+                    />
+                </video>
+                <div style={{ display: 'flex', gap:'20px', margin:'10px' , justifyContent: 'center'}}>
                 <Button
                     className="change"
                     style={{
@@ -66,18 +73,109 @@ function SubtitleDetail() {
                 >
                     <a 
                     style={{color: '#ffffff', textDecoration:'none', marginTop:'20px'}} 
-                    href={`${SUBTITLE_FILE_API}/${srtPath}`}>
+                    href={`${SUBTITLE_FILE_API}/${srt_translated}`}>
                     Dowload SRT file
                     </a>
                 </Button>
                 </div>
+                <br/>
+                <h4>Video thuyết minh</h4>
+                <video className='video'
+                    id="my-video-player"
+                    style={{ border: '3px solid black' }}
+                    width="700"
+                    height="470"
+                    controls
+                >
+                    <source
+                    src={`${SUBTITLE_FILE_API}/${video_explanation}`}
+                    type="video/mp4"
+                    />
+                </video>
+                <div style={{ display: 'flex', gap:'20px', marginTop:'10px', justifyContent: 'center' }}>
+                <Button
+                    className="change"
+                    style={{
+                    cursor: 'pointer',
+                    backgroundColor: '#563D7C',
+                    color: '#ffffff', 
+                    }}
+                    data-name="filename"
+                >
+                    <a 
+                    style={{color: '#ffffff', textDecoration:'none', marginTop:'20px'}} 
+                    href={`${SUBTITLE_FILE_API}/${srt_labeled}`}>
+                    Dowload SRT file
+                    </a>
+                </Button>
+                </div>
+                <br/>
+                { video_explanation_sub && (
+                  <div>
+                    <h4>Video thuyết minh có phụ đề</h4>
+                    <video className='video'
+                        id="my-video-player"
+                        style={{ border: '3px solid black' }}
+                        width="700"
+                        height="470"
+                        controls
+                    >
+                        <source
+                        src={`${SUBTITLE_FILE_API}/${video_explanation_sub}`}
+                        type="video/mp4"
+                        />
+                    </video>
+                    <div style={{ display: 'flex', gap:'20px', marginTop:'10px', justifyContent: 'center' }}>
+                    <Button
+                        className="change"
+                        style={{
+                        cursor: 'pointer',
+                        backgroundColor: '#563D7C',
+                        color: '#ffffff', 
+                        }}
+                        data-name="filename"
+                    >
+                        <a 
+                        style={{color: '#ffffff', textDecoration:'none', marginTop:'20px'}} 
+                        href={`${SUBTITLE_FILE_API}/${srt_original}`}>
+                        Dowload SRT file
+                        </a>
+                    </Button>
+                    </div>
+                  </div>
+                )}
                 </div>
                 <div className="right">
-                <SubtitleFrom
-                  txtPath={`${SUBTITLE_FILE_API}/${txtPath}`}
-                  wavPath={`${SUBTITLE_FILE_API}/${wavPath}`}
-                  outputWavPath={`${SUBTITLE_FILE_API}/${outputWavPath}`}
-                />
+                  <Container>
+                    <h4>Thông tin chi tiết:</h4>
+                    - Tên video: {audio_original.split('.')[0]} <br/>
+                    - Audio gốc:
+                        <Col xs={6} className="text-center">
+                          <audio controls src={`${SUBTITLE_FILE_API}/${audio_original}`}>
+                            Your browser does not support the audio element.
+                          </audio>
+                        </Col>
+                    - Audio đã lọc nhiễu:
+                        <Col xs={6} className="text-center">
+                          <audio controls src={`${SUBTITLE_FILE_API}/${audio_filtered}`}>
+                            Your browser does not support the audio element.
+                          </audio>
+                        </Col>
+                    - Audio thuyết minh:
+                    <Col xs={6} className="text-center">
+                      <audio controls src={`${SUBTITLE_FILE_API}/${audio_described}`}>
+                        Your browser does not support the audio element.
+                      </audio>
+                    </Col>
+                    - Audio thuyết minh được phủ với audio gốc:
+                    <Col xs={6} className="text-center">
+                      <audio controls src={`${SUBTITLE_FILE_API}/${audio_overlay_described}`}>
+                        Your browser does not support the audio element.
+                      </audio>
+                    </Col>
+                    - Thời gian thực thi: {execution_time} <br/>
+                    - Phương pháp Speech-to-Text: {type}
+                  </Container>
                 </div>
             </div>
             </div>

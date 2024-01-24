@@ -16,7 +16,6 @@ import { Navigate } from 'react-router-dom'
 import Spinner from 'react-bootstrap/Spinner'
 import {Link} from 'react-router-dom'
 
-
 const Auth = ({authRoute}) => {
   const { authState: { authLoading, isAuthenticated }} = useContext(AuthContext)
   const spinnerStyle = {
@@ -34,7 +33,7 @@ const Auth = ({authRoute}) => {
           <Spinner animation='border' variant='info'/> 
         </div>
       )
-  else if (isAuthenticated) return <Navigate to='/summary'/>
+  else if (isAuthenticated) return <Navigate to='/subtitle/video-files'/>
   else
     body = (
       <>
@@ -44,19 +43,17 @@ const Auth = ({authRoute}) => {
     )
     return (
       <>
-        <MDBContainer fluid className='p-5 w-75'>
+        <MDBContainer fluid className='p-3 w-75'>
           <MDBRow>
             <MDBCol md='6' className='text-center text-md-start d-flex flex-column justify-content-center'>
               <Link style={{ textDecoration: 'none', color: '#000000' }} to='/'>
               <h1 className="my-5 display-3 fw-bold ls-tight px-3">
-                Create quality text<br />
+                Create quality dubbing <br />
                 <span className="text-primary">for your videos</span>
               </h1>
               </Link>
               <p className='px-3' style={{color: 'hsl(217, 10%, 50.8%)'}}>
-              The site provides tools and functions to automatically classify, summarize, and generate captions based on word processing. 
-              With the features it offers, you can reap benefits for your
-              business and personal work.
+              If you find yourself with a foreign language video whose content eludes your understanding or if you seek to seamlessly dub your video into Vietnamese, our platform equipped with a precise and automatic gender recognition model is the ideal solution. Simply sign up (or log in if you already have an account) to craft high-quality videos at no cost.
               </p>
               
             </MDBCol>
