@@ -69,7 +69,7 @@ def main():
     # directory = args.source_path
     video_input = args.source_path # video gốc
     if video_input.startswith('https://www.youtube.com'):
-        video_path = download_youtube_video(video_input, './downloads')
+        video_path = download_youtube_video(video_input, '../public/videos')
         print("Video youtube đã được lưu vào: "+ video_path)
         video_input = video_path
 
@@ -160,7 +160,7 @@ def main():
     audiodescribed_video_path = overlay_audio_on_video.merge_video_and_audio(video_input, audiodescribed_wav_path)
     print("path video thuyết minh:", audiodescribed_video_path)
     print("Hoàn thành bước 4 tạo video thuyết minh")
-
+    ad_subtitle_video_path= None
     if ad_subtitle_en:
         ad_subtitle_video_path  = createVideoOutput.createAudiodescribed(audiodescribed_video_path, path+newname+'_output.srt')
         print("path video thuyết minh có phụ đề:", ad_subtitle_video_path)

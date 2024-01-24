@@ -6,7 +6,6 @@ app = Flask(__name__)
 
 @app.route('/api/createSubtitleV1', methods=['POST'])
 def subtitlev1():
-    # Nhận dữ liệu từ request
     data = request.get_json()
     video = data.get('video')
     sourceLanguage = data.get('sourceLanguage')
@@ -16,10 +15,13 @@ def subtitlev1():
     adSubtitle = data.get('adSubtitle')
     type = data.get('type')
 
-    # Gọi script Python từ Flask
-    command = f'python3 {type}.py ../public/videos/{video} --l_in {sourceLanguage}'
+    if video.startswith('https://www.youtube.com'):
+        command = f'python3 {type}.py {video}'
+    else:
+        command = f'python3 {type}.py ../public/videos/{video}'
     
-    # Thêm các tham số có giá trị không phải None vào lệnh
+    if sourceLanguage is not None:
+        command += f' --l_in {sourceLanguage}'
     if rate is not None:
         command += f' -r {rate}'
     if volume is not None:
@@ -32,26 +34,20 @@ def subtitlev1():
     print('command')
     print(command)
     try:
-        # Thực hiện lệnh và nhận output
         result = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT, text=True)
         
-        # Tìm vị trí của chuỗi JSON trong output và chỉ lấy phần đó
         json_start = result.find('{')
         json_end = result.rfind('}') + 1
         json_data = result[json_start:json_end]
 
-        # Chuyển đổi chuỗi JSON thành dictionary
         result_dict = json.loads(json_data)
 
-        # Trả về kết quả dưới dạng JSON
         return jsonify(result_dict), 200
     except subprocess.CalledProcessError as e:
-        # Xử lý lỗi nếu có
         error_message = f"Error executing command: {e.output}"
         return jsonify({"error": error_message}), 500
 
 
-        
 if __name__ == '__main__':
     app.run(port=6000) 
     app.run(debug=True)
