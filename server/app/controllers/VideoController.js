@@ -72,7 +72,7 @@ class VideoController{
 
     async createSubtitle(req, res) {
         try {
-            const { video, sourceLanguage, type, rate, volume, gender, adSubtitle } = req.body;
+            const { video, sourceLanguage, type, rate, volume, gender, adSubtitle, retainSound } = req.body;
             console.log(req.body)
             // Simple validation
             if (!video || !type) {

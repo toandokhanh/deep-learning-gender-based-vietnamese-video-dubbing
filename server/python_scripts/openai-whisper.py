@@ -40,6 +40,8 @@ def main():
                         help="create videos with Vietnamese subtitles?")
     parser.add_argument("--ad_subtitle_en", type=str2bool, default=False,
                         help="Create a voice-over video with English subtitles?")
+    parser.add_argument("--retain_sound", type=str2bool, default=True, 
+                        help="retain the original sound")
     parser.add_argument("--verbose", type=str2bool, default=False,
                         help="whether to print out the progress and debug messages")
     parser.add_argument("--gender", type=str, default="auto", choices=[
@@ -61,6 +63,7 @@ def main():
     srt_only: bool = args.pop("srt_only")
     subtitle_vi: bool = args.pop("subtitle_vi")
     ad_subtitle_en: bool = args.pop("ad_subtitle_en")
+    retain_sound: bool = args.pop("retain_sound")
     language: str = args.pop("l_in")
     gender: str = args.pop("gender")
     rate : int = args.pop("rate")
@@ -119,7 +122,7 @@ def main():
         captions = SRTToWAV.process_srt(srt_labeled)
         output_audio_path = SRTToWAV.text_to_speech(captions, srt_labeled, rate, volume)
         print(f"path wav thuyết minh: {output_audio_path}")
-        audiodescribed_wav_path = overlay_audio_on_video.process_audio(path_wav, output_audio_path, ms_start)
+        audiodescribed_wav_path = overlay_audio_on_video.process_audio(path_wav, output_audio_path, ms_start, retain_sound)
         print("path wav thuyết minh được phủ với wav gốc:", audiodescribed_wav_path)
         audiodescribed_video_path = overlay_audio_on_video.merge_video_and_audio(input_arg, audiodescribed_wav_path)
         print("path video thuyết minh:", audiodescribed_video_path)
