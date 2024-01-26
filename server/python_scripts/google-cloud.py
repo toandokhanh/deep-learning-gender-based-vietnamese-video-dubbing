@@ -33,6 +33,8 @@ def main():
                         help="Start time in milliseconds for overlaying the audio on the video.")
     parser.add_argument("--ad_subtitle_en", type=str2bool, default=False, 
                         help="Create a voice-over video with English subtitles?")
+    parser.add_argument("--retain_sound", type=str2bool, default=True, 
+                        help="retain the original sound")
     parser.add_argument('-s', '--l_in',default="en", 
                         help='---> truyền ngôn ngữ file đầu vào')
     parser.add_argument('-d', '--l_out',default="vi",
@@ -154,7 +156,7 @@ def main():
     output_audio_path = SRTToWAV.text_to_speech(captions, srt_labeled, args.rate, args.volume)
     print(f"path wav thuyết minh: {output_audio_path}")
 
-    audiodescribed_wav_path = overlay_audio_on_video.process_audio(wav_input, output_audio_path, args.ms_start)
+    audiodescribed_wav_path = overlay_audio_on_video.process_audio(wav_input, output_audio_path, args.ms_start, args.retain_sound)
     print("path wav thuyết minh được phủ với wav gốc:", audiodescribed_wav_path)
     
     audiodescribed_video_path = overlay_audio_on_video.merge_video_and_audio(video_input, audiodescribed_wav_path)
