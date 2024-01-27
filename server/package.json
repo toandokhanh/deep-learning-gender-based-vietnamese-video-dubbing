@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nodemon index.js",
     "seed": "node config/db/seeder/Seeder.js",
-    "run-flask": "node util/runpy.js"
+    "flask": "python3 python_scripts/app.py --watch"
   },
   "keywords": [],
   "author": "",

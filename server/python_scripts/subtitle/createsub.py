@@ -517,13 +517,39 @@ def entries_generator(srt_file):
             yield number_in_sequence, timecode, subtitles
 
 
+# def translate(entries, src, dest):
+#     """Generate the translated entries.
+#     args:
+#         entries: The entries queue.
+#         src: The source language.
+#         dest: The target language.
+#     """
+#     translator = Translator()
+#     count_failure = 0
+#     count_entries = 0
+
+#     for number_in_sequence, timecode, subtitles in entries:
+#         count_entries += 1
+#         translated_subtitles = []
+
+#         for i, subtitle in enumerate(subtitles, 1):
+#             # handle the special case: empty string.
+#             if not subtitle:
+#                 translated_subtitles.append(subtitle)
+#                 continue
+#             translated_subtitle = translator.translate(subtitle, src=src, dest=dest).text
+#             # handle the fail to translate case.
+#             fail_to_translate = translated_subtitle[-1] == '\n'
+#             while fail_to_translate:
+#                 translated_subtitle = translator.translate(translated_subtitle, src=src, dest=dest).text
+                
+
+#             translated_subtitles.append(translated_subtitle if fail_to_translate else translated_subtitle + '\n')
+
+        
+
+#         yield number_in_sequence, timecode, translated_subtitles, count_failure, count_entries
 def translate(entries, src, dest):
-    """Generate the translated entries.
-    args:
-        entries: The entries queue.
-        src: The source language.
-        dest: The target language.
-    """
     translator = Translator()
     count_failure = 0
     count_entries = 0
@@ -533,20 +559,17 @@ def translate(entries, src, dest):
         translated_subtitles = []
 
         for i, subtitle in enumerate(subtitles, 1):
-            # handle the special case: empty string.
             if not subtitle:
                 translated_subtitles.append(subtitle)
                 continue
-            translated_subtitle = translator.translate(subtitle, src=src, dest=dest).text
-            # handle the fail to translate case.
-            fail_to_translate = translated_subtitle[-1] == '\n'
-            while fail_to_translate:
-                translated_subtitle = translator.translate(translated_subtitle, src=src, dest=dest).text
-                
 
-            translated_subtitles.append(translated_subtitle if fail_to_translate else translated_subtitle + '\n')
+            try:
+                translated_subtitle = translator.translate(subtitle, src=src, dest=dest).text
+            except Exception as e:
+                print(f"Translation error: {e}")
+                translated_subtitle = subtitle  # Fallback to original subtitle on translation error
 
-        
+            translated_subtitles.append(translated_subtitle + '\n')
 
         yield number_in_sequence, timecode, translated_subtitles, count_failure, count_entries
 

@@ -3,11 +3,14 @@ from moviepy.editor import VideoFileClip, AudioFileClip
 from pydub import AudioSegment
 import os
 
-def process_audio(input_path1, input_path2, ms_start=0):
+def process_audio(input_path1, input_path2, ms_start=0, retain_sound=True):
     sound1 = AudioSegment.from_file(input_path1, format="wav")
     sound2 = AudioSegment.from_file(input_path2, format="wav")
     # Decrease the volume of the first input audio by 6 dB
-    quieter = sound1 - 9
+    if(retain_sound):
+        quieter = sound1 - 9
+    else:
+        quieter = sound1 - 1000
     # Assuming the translated audio file has the same name with "_translated" added
     output_path = os.path.splitext(input_path1)[0] + "_audiodescribed.wav"
     # If the translated audio file has a different naming convention, update the output_path accordingly

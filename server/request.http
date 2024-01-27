@@ -122,7 +122,8 @@ Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
   "video": "bbc.mp4",
   "type": "openai-whisper",
   "gender": "female",
-  "adSubtitle": true
+  "adSubtitle": true,
+  "retainSound": false
 }
 
 #### lấy ra toàn bộ video

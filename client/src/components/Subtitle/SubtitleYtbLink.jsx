@@ -13,9 +13,10 @@ function SubtitleYtbLink() {
   const [rate, setRate] = useState('auto');
   const [volume, setVolume] = useState('auto');
   const [loading, setLoading] = useState(false);
-  const [adSubtitle, setAdSubtitle] = useState(false);
+  const [adSubtitle, setAdSubtitle] = useState(true);
   const [videoLink, setVideoLink] = useState('');
   const [alert, setAlert] = useState(null)
+  const [retainSound, setRetainSound] = useState(true);
   const navigate = useNavigate();
   const spinnerStyle = {
     position: 'fixed',
@@ -50,7 +51,8 @@ function SubtitleYtbLink() {
             rate,
             volume,
             gender,
-            adSubtitle
+            adSubtitle,
+            retainSound
         };
         const isAuto = value => value === 'auto';
         const filteredVideoForm = {};
@@ -193,6 +195,18 @@ function SubtitleYtbLink() {
                 onChange={(e) => setAdSubtitle(e.target.checked)}
               />
             </Form.Group>
+
+
+            <br/>
+            <Form.Group>
+              <Form.Check 
+                type="checkbox" 
+                label="Giử lại âm thanh gốc của video"
+                checked={retainSound}
+                onChange={(e) => setRetainSound(e.target.checked)}
+              />
+            </Form.Group>
+
 
             <br/>
             <Button variant="primary" type="submit">
