@@ -272,6 +272,46 @@ def time_to_ms(time_str):
     # Convert to milliseconds
     return (h * 3600 + m * 60 + s) * 1000 + ms
 
+# def split_and_predict(subtitle_path, audio_path):
+#     # Read subtitle file
+#     with open(subtitle_path, 'r') as f:
+#         subtitles = f.read().splitlines()
+
+#     # Process each subtitle
+#     new_subtitles = []
+#     for i in range(0, len(subtitles), 4):
+#         start_time, end_time = subtitles[i+1].split(' --> ')
+        
+#         # Convert time to milliseconds
+#         start_time_ms = time_to_ms(start_time)
+#         end_time_ms = time_to_ms(end_time)
+
+#         # Split audio segment
+#         audio_segment = AudioSegment.from_wav(audio_path)
+#         segment = audio_segment[start_time_ms:end_time_ms]
+
+#         # Skip empty lines
+#         if subtitles[i+2].strip():
+#             # Save the audio segment to a temporary WAV file
+#             temp_audio_path = tempfile.NamedTemporaryFile(suffix=".wav", delete=False).name
+#             segment.export(temp_audio_path, format="wav")
+#             # Predict gender label
+#             predicted_label = predict_gender(temp_audio_path)
+#             # Remove the temporary audio file
+#             os.remove(temp_audio_path)
+
+#             # Update subtitle with label
+#             new_subtitles.append(f'{i//4 + 1}\n{subtitles[i+1]}\n({predicted_label}){subtitles[i+2]}\n')
+
+#     # Save updated subtitles
+#     output_path = os.path.splitext(subtitle_path)[0] + '_gender_labeled.srt'
+#     with open(output_path, 'w') as f:
+#         f.write('\n'.join(new_subtitles))
+
+
+#     return output_path
+
+
 def split_and_predict(subtitle_path, audio_path):
     # Read subtitle file
     with open(subtitle_path, 'r') as f:
@@ -280,6 +320,10 @@ def split_and_predict(subtitle_path, audio_path):
     # Process each subtitle
     new_subtitles = []
     for i in range(0, len(subtitles), 4):
+        # Check if there are enough lines in subtitles
+        if i + 1 >= len(subtitles):
+            break
+
         start_time, end_time = subtitles[i+1].split(' --> ')
         
         # Convert time to milliseconds
@@ -291,7 +335,7 @@ def split_and_predict(subtitle_path, audio_path):
         segment = audio_segment[start_time_ms:end_time_ms]
 
         # Skip empty lines
-        if subtitles[i+2].strip():
+        if i + 2 < len(subtitles) and subtitles[i+2].strip():
             # Save the audio segment to a temporary WAV file
             temp_audio_path = tempfile.NamedTemporaryFile(suffix=".wav", delete=False).name
             segment.export(temp_audio_path, format="wav")
@@ -308,8 +352,8 @@ def split_and_predict(subtitle_path, audio_path):
     with open(output_path, 'w') as f:
         f.write('\n'.join(new_subtitles))
 
-
     return output_path
+
 def label_srt_file(input_file_path, label):
     output_file_path = input_file_path.replace('.srt', '_gender_labeled.srt')
     
