@@ -11,7 +11,8 @@ import utils.overlay_audio_on_video as overlay_audio_on_video
 import utils.gender_labeling as gender_labeling
 import utils.SRTToWAV as SRTToWAV
 import utils.createVideoOutput as createVideoOutput
-from utils.utils import filename, str2bool, write_srt, mp4_to_wav, noise_deepfilternet, read_video_info
+from utils.srtToTxt import srt_to_txt_v2
+from utils.utils import filename, str2bool, write_srt, mp4_to_wav, noise_deepfilternet, read_video_info, srt_to_txt
 import pytube
 import uuid
 import re
@@ -104,6 +105,8 @@ def main():
     print(path_wav_handled)
     if srt_only:
         print("path srt gốc: "+ srt_path)
+        path_txt = srt_to_txt_v2(srt_path)
+        print("path txt gốc: "+ path_txt)
         path_srt_translated = translate_srt.translate_and_save_srt(srt_path)
         print("path srt đã dịch sang tiếng việt: "+ path_srt_translated)
         # gender : auto
@@ -135,7 +138,9 @@ def main():
             print("path video phụ đề:", subtitle_video_path)
         capacity, time = read_video_info(input_arg)
         end_time = datetime.now()
-        print("Thời gian thực thi: "+str(end_time-start_time))
+        time_difference = end_time - start_time
+        seconds = time_difference.total_seconds()
+        print("Thời gian thực thi: "+str(seconds))
         
         return {"date_time":time_text,
                 "path_video": input_arg,
@@ -152,7 +157,7 @@ def main():
                 "videoSubtitle": subtitle_video_path,
                 "video_explanation":audiodescribed_video_path,
                 "video_explanation_sub":ad_subtitle_video_path,
-                "execution_time": str(end_time-start_time)
+                "execution_time": str(seconds)
                 }
 
 def get_audio(paths):

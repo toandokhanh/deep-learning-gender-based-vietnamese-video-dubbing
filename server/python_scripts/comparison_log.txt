@@ -1,0 +1,11 @@
+../public/videos/CorrectGender/gender.srt| ../public/videos/gender.srt |
+              precision    recall  f1-score   support
+
+           0     0.9124    0.9851    0.9474       201
+           1     0.9845    0.9091    0.9453       209
+
+    accuracy                         0.9463       410
+   macro avg     0.9484    0.9471    0.9463       410
+weighted avg     0.9492    0.9463    0.9463       410
+
+

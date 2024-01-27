@@ -170,7 +170,9 @@ def main():
 
     capacity, time = read_video_info(video_input)
     end_time = datetime.now()
-    print("Thời gian thực thi là: "+ str(end_time-start_time))
+    time_difference = end_time - start_time
+    seconds = time_difference.total_seconds()
+    print("Thời gian thực thi là: "+ str(seconds))
     return {
             "date_time": time_text,
             "path_video": video_input,
@@ -187,7 +189,7 @@ def main():
             "videoSubtitle": video_output,
             "video_explanation":audiodescribed_video_path,
             "video_explanation_sub":ad_subtitle_video_path,
-            "execution_time" : str(end_time-start_time)
+            "execution_time" : str(seconds)
             }
     
 def mp4_to_wav(filename,output,name):

@@ -1,6 +1,7 @@
 import os
 from typing import Iterator, TextIO
 from moviepy.editor import VideoFileClip
+import re
 
 def read_video_info(filename):
     """
@@ -84,3 +85,36 @@ def noise_deepfilternet(file):
     print("Đã giảm tiếng ồn DeepFilterNet")
     print('')
     return output
+
+
+
+
+def srt_to_txt(input_srt_path):
+    # Kiểm tra xem đường dẫn đến file srt có tồn tại không
+    if not os.path.exists(input_srt_path):
+        print(f"File {input_srt_path} không tồn tại.")
+        return
+
+    # Lấy tên file và đường dẫn không bao gồm phần mở rộng
+    file_name, _ = os.path.splitext(os.path.basename(input_srt_path))
+
+    # Tạo đường dẫn đến file txt
+    output_txt_path = f"{file_name}.txt"
+
+    try:
+        with open(input_srt_path, 'r', encoding='utf-8') as srt_file:
+            # Đọc nội dung từ file srt
+            srt_content = srt_file.read()
+
+            # Loại bỏ các dấu câu
+            srt_content = re.sub(r'[^\w\s]', '', srt_content)
+
+            # Ghi nội dung vào file txt
+            with open(output_txt_path, 'w', encoding='utf-8') as txt_file:
+                txt_file.write(srt_content)
+
+        return output_txt_path
+
+    except Exception as e:
+        print(f"Lỗi khi chuyển đổi: {e}")
+
