@@ -14,7 +14,8 @@ function Subtitle() {
   const [rate, setRate] = useState('auto');
   const [volume, setVolume] = useState('auto');
   const [loading, setLoading] = useState(false);
-  const [adSubtitle, setAdSubtitle] = useState(false);
+  const [adSubtitle, setAdSubtitle] = useState(true);
+  const [retainSound, setRetainSound] = useState(true);
   const navigate = useNavigate();
   const spinnerStyle = {
     position: 'fixed',
@@ -72,6 +73,7 @@ function Subtitle() {
         volume,
         gender,
         adSubtitle,
+        retainSound
       };
       const isAuto = value => value === 'auto';
       const filteredVideoForm = {};
@@ -198,6 +200,16 @@ function Subtitle() {
                 label="Tạo video thuyết minh có phụ đề ngôn ngữ gốc"
                 checked={adSubtitle}
                 onChange={(e) => setAdSubtitle(e.target.checked)}
+              />
+            </Form.Group>
+
+            <br/>
+            <Form.Group>
+              <Form.Check 
+                type="checkbox" 
+                label="Giử lại âm thanh gốc của video"
+                checked={retainSound}
+                onChange={(e) => setRetainSound(e.target.checked)}
               />
             </Form.Group>
 

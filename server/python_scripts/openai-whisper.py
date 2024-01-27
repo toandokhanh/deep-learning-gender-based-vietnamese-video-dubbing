@@ -11,7 +11,8 @@ import utils.overlay_audio_on_video as overlay_audio_on_video
 import utils.gender_labeling as gender_labeling
 import utils.SRTToWAV as SRTToWAV
 import utils.createVideoOutput as createVideoOutput
-from utils.utils import filename, str2bool, write_srt, mp4_to_wav, noise_deepfilternet, read_video_info
+from utils.srtToTxt import srt_to_txt_v2
+from utils.utils import filename, str2bool, write_srt, mp4_to_wav, noise_deepfilternet, read_video_info, srt_to_txt
 import pytube
 import uuid
 import re
@@ -40,6 +41,8 @@ def main():
                         help="create videos with Vietnamese subtitles?")
     parser.add_argument("--ad_subtitle_en", type=str2bool, default=False,
                         help="Create a voice-over video with English subtitles?")
+    parser.add_argument("--retain_sound", type=str2bool, default=True, 
+                        help="retain the original sound")
     parser.add_argument("--verbose", type=str2bool, default=False,
                         help="whether to print out the progress and debug messages")
     parser.add_argument("--gender", type=str, default="auto", choices=[
@@ -61,6 +64,7 @@ def main():
     srt_only: bool = args.pop("srt_only")
     subtitle_vi: bool = args.pop("subtitle_vi")
     ad_subtitle_en: bool = args.pop("ad_subtitle_en")
+    retain_sound: bool = args.pop("retain_sound")
     language: str = args.pop("l_in")
     gender: str = args.pop("gender")
     rate : int = args.pop("rate")
@@ -101,6 +105,8 @@ def main():
     print(path_wav_handled)
     if srt_only:
         print("path srt gốc: "+ srt_path)
+        path_txt = srt_to_txt_v2(srt_path)
+        print("path txt gốc: "+ path_txt)
         path_srt_translated = translate_srt.translate_and_save_srt(srt_path)
         print("path srt đã dịch sang tiếng việt: "+ path_srt_translated)
         # gender : auto
@@ -119,7 +125,7 @@ def main():
         captions = SRTToWAV.process_srt(srt_labeled)
         output_audio_path = SRTToWAV.text_to_speech(captions, srt_labeled, rate, volume)
         print(f"path wav thuyết minh: {output_audio_path}")
-        audiodescribed_wav_path = overlay_audio_on_video.process_audio(path_wav, output_audio_path, ms_start)
+        audiodescribed_wav_path = overlay_audio_on_video.process_audio(path_wav, output_audio_path, ms_start, retain_sound)
         print("path wav thuyết minh được phủ với wav gốc:", audiodescribed_wav_path)
         audiodescribed_video_path = overlay_audio_on_video.merge_video_and_audio(input_arg, audiodescribed_wav_path)
         print("path video thuyết minh:", audiodescribed_video_path)
@@ -132,7 +138,9 @@ def main():
             print("path video phụ đề:", subtitle_video_path)
         capacity, time = read_video_info(input_arg)
         end_time = datetime.now()
-        print("Thời gian thực thi: "+str(end_time-start_time))
+        time_difference = end_time - start_time
+        seconds = time_difference.total_seconds()
+        print("Thời gian thực thi: "+str(seconds))
         
         return {"date_time":time_text,
                 "path_video": input_arg,
@@ -149,7 +157,7 @@ def main():
                 "videoSubtitle": subtitle_video_path,
                 "video_explanation":audiodescribed_video_path,
                 "video_explanation_sub":ad_subtitle_video_path,
-                "execution_time": str(end_time-start_time)
+                "execution_time": str(seconds)
                 }
 
 def get_audio(paths):
