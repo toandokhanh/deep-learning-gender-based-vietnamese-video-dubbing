@@ -16,6 +16,7 @@ function Subtitle() {
   const [loading, setLoading] = useState(false);
   const [adSubtitle, setAdSubtitle] = useState(true);
   const [retainSound, setRetainSound] = useState(true);
+  const [noise, setNoise] = useState(false);
   const navigate = useNavigate();
   const spinnerStyle = {
     position: 'fixed',
@@ -73,7 +74,8 @@ function Subtitle() {
         volume,
         gender,
         adSubtitle,
-        retainSound
+        retainSound,
+        noise
       };
       const isAuto = value => value === 'auto';
       const filteredVideoForm = {};
@@ -213,6 +215,16 @@ function Subtitle() {
               />
             </Form.Group>
 
+
+            <br/>
+            <Form.Group>
+              <Form.Check 
+                type="checkbox" 
+                label="Loại bỏ tiếng ồn (tiền xử lý âm thanh)"
+                checked={noise}
+                onChange={(e) => setNoise(e.target.checked)}
+              />
+            </Form.Group>
             <br/>
             <Button variant="primary" type="submit">
             Submit

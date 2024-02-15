@@ -17,6 +17,7 @@ function SubtitleYtbLink() {
   const [videoLink, setVideoLink] = useState('');
   const [alert, setAlert] = useState(null)
   const [retainSound, setRetainSound] = useState(true);
+  const [noise, setNoise] = useState(false);
   const navigate = useNavigate();
   const spinnerStyle = {
     position: 'fixed',
@@ -52,7 +53,8 @@ function SubtitleYtbLink() {
             volume,
             gender,
             adSubtitle,
-            retainSound
+            retainSound,
+            noise
         };
         const isAuto = value => value === 'auto';
         const filteredVideoForm = {};
@@ -207,6 +209,15 @@ function SubtitleYtbLink() {
               />
             </Form.Group>
 
+            <br/>
+            <Form.Group>
+              <Form.Check 
+                type="checkbox" 
+                label="Loại bỏ tiếng ồn (tiền xử lý âm thanh)"
+                checked={noise}
+                onChange={(e) => setNoise(e.target.checked)}
+              />
+            </Form.Group>
 
             <br/>
             <Button variant="primary" type="submit">

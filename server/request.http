@@ -122,6 +122,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWFhN
   "video": "bbc.mp4",
   "type": "openai-whisper",
   "gender": "female",
+  "noise": true,
   "adSubtitle": true,
   "retainSound": false
 }
