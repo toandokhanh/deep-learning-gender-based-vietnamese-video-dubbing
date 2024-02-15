@@ -12,6 +12,7 @@ def subtitlev1():
     rate = data.get('rate')
     volume = data.get('volume')
     gender = data.get('gender')
+    noise = data.get('noise')
     retainSound = data.get('retainSound')
     adSubtitle = data.get('adSubtitle')
     type = data.get('type')
@@ -29,6 +30,8 @@ def subtitlev1():
         command += f' -v {volume}'
     if gender is not None:
         command += f' --gender {gender}'
+    if noise is not None:
+        command += f' -noise={noise}'
     if adSubtitle is not None:
         command += f' --ad_subtitle_en={adSubtitle}'
     if retainSound is not None:

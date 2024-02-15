@@ -1,3 +1,81 @@
+../public/videos/CorrectGender/0897558d_translated_gender_labeled.srt| ../public/videos/0897558d_translated_gender_labeled.srt |
+Only one unique label (1), skipping classification report.
+
+../public/videos/CorrectGender/0a060ef8_translated_gender_labeled.srt| ../public/videos/0a060ef8_translated_gender_labeled.srt |
+              precision    recall  f1-score   support
+
+           0     0.0000    1.0000    0.0000         0
+           1     1.0000    0.9394    0.9688        33
+
+    accuracy                         0.9394        33
+   macro avg     0.5000    0.9697    0.4844        33
+weighted avg     1.0000    0.9394    0.9688        33
+
+
+../public/videos/CorrectGender/16191a89_translated_gender_labeled.srt| ../public/videos/16191a89_translated_gender_labeled.srt |
+Only one unique label (0), skipping classification report.
+
+../public/videos/CorrectGender/2e96677c_translated_gender_labeled.srt| ../public/videos/2e96677c_translated_gender_labeled.srt |
+              precision    recall  f1-score   support
+
+           0     0.8636    1.0000    0.9268        19
+           1     1.0000    0.8846    0.9388        26
+
+    accuracy                         0.9333        45
+   macro avg     0.9318    0.9423    0.9328        45
+weighted avg     0.9424    0.9333    0.9337        45
+
+
+../public/videos/CorrectGender/7dc04510_translated_gender_labeled.srt| ../public/videos/7dc04510_translated_gender_labeled.srt |
+              precision    recall  f1-score   support
+
+           0     0.0000    1.0000    0.0000         0
+           1     1.0000    0.9630    0.9811        27
+
+    accuracy                         0.9630        27
+   macro avg     0.5000    0.9815    0.4906        27
+weighted avg     1.0000    0.9630    0.9811        27
+
+
+../public/videos/CorrectGender/9705be6c_translated_gender_labeled.srt| ../public/videos/9705be6c_translated_gender_labeled.srt |
+              precision    recall  f1-score   support
+
+           0     0.0000    1.0000    0.0000         0
+           1     1.0000    0.9259    0.9615        27
+
+    accuracy                         0.9259        27
+   macro avg     0.5000    0.9630    0.4808        27
+weighted avg     1.0000    0.9259    0.9615        27
+
+
+../public/videos/CorrectGender/9e2fbfa1_translated_gender_labeled.srt| ../public/videos/9e2fbfa1_translated_gender_labeled.srt |
+              precision    recall  f1-score   support
+
+           0     1.0000    1.0000    1.0000        15
+           1     1.0000    1.0000    1.0000        17
+
+    accuracy                         1.0000        32
+   macro avg     1.0000    1.0000    1.0000        32
+weighted avg     1.0000    1.0000    1.0000        32
+
+
+../public/videos/CorrectGender/afb2839b_translated_gender_labeled.srt| ../public/videos/afb2839b_translated_gender_labeled.srt |
+Only one unique label (0), skipping classification report.
+
+../public/videos/CorrectGender/d3273412_translated_gender_labeled.srt| ../public/videos/d3273412_translated_gender_labeled.srt |
+Only one unique label (1), skipping classification report.
+
+../public/videos/CorrectGender/dc83a733_translated_gender_labeled.srt| ../public/videos/dc83a733_translated_gender_labeled.srt |
+              precision    recall  f1-score   support
+
+           0     1.0000    0.9583    0.9787        48
+           1     0.0000    1.0000    0.0000         0
+
+    accuracy                         0.9583        48
+   macro avg     0.5000    0.9792    0.4894        48
+weighted avg     1.0000    0.9583    0.9787        48
+
+
 ../public/videos/CorrectGender/gender.srt| ../public/videos/gender.srt |
               precision    recall  f1-score   support
 
