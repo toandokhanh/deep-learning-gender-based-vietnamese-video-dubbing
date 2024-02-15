@@ -29,6 +29,8 @@ def main():
                         help='Volume for speech (default: 50)')
     parser.add_argument("-ms", "--ms_start", type=int, default=0, 
                         help="Start time in milliseconds for overlaying the audio on the video.")
+    parser.add_argument("-noise", "--algorithm_noise", type=str2bool, default=False,
+                        help="Chọn thuật toán giảm nhiễu")
     parser.add_argument("--model", default="small",
                         choices=whisper.available_models(), help="name of the Whisper model to use")
     parser.add_argument("--output_dir", "-o", type=str,
@@ -64,6 +66,7 @@ def main():
     srt_only: bool = args.pop("srt_only")
     subtitle_vi: bool = args.pop("subtitle_vi")
     ad_subtitle_en: bool = args.pop("ad_subtitle_en")
+    algorithm_noise: bool = args.pop("algorithm_noise")
     retain_sound: bool = args.pop("retain_sound")
     language: str = args.pop("l_in")
     gender: str = args.pop("gender")
@@ -79,10 +82,7 @@ def main():
         input_arg = video_path
     root_path = os.path.dirname(input_arg) + '/'
     output_dir = root_path
-    print("path----------------------------------------------------------------")
-    print(path)
-    print("input_arg----------------------------------------------------------------")
-    print(input_arg)
+
     if model_name.endswith(".en"):
         warnings.warn(
             f"{model_name} is an English-only model, forcing English detection.")
@@ -91,18 +91,29 @@ def main():
     elif language != "auto":
         args["language"] = language
         
+
+    path_wav = mp4_to_wav(input_arg)
+    print("Path wav gốc:")
+    print(path_wav)
+    if algorithm_noise:
+        path_wav_handled = noise_deepfilternet(path_wav)
+        print("Path wav đã lọc nhiễu:")
+        print(path_wav_handled)
+    else:
+        print("Không có giảm nhiễu")
+        path_wav_handled = path_wav
+
     model = whisper.load_model(model_name)
-    audios = get_audio(path)
+    audios = {input_arg: path_wav_handled}
+    print("----------------------------------------------------------------") # {'../public/videos/f8c1496e.mp4': '../public/videos/f8c1496e_DeepFilterNet3.wav'}
+    print(audios)
+    # audios = get_audio(path)
+    # print("----------------------------------------------------------------") # {'../public/videos/d50aee64.mp4': '/tmp/d50aee64.wav'}
+    # print(audios)
     srt_path = get_subtitles(
         audios, output_srt or srt_only, output_dir, lambda audio_path: model.transcribe(audio_path, **args)
     )
     
-    path_wav = mp4_to_wav(input_arg)
-    print("Path wav gốc:")
-    print(path_wav)
-    path_wav_handled = noise_deepfilternet(path_wav)
-    print("Path wav đã lọc nhiễu:")
-    print(path_wav_handled)
     if srt_only:
         print("path srt gốc: "+ srt_path)
         path_txt = srt_to_txt_v2(srt_path)
