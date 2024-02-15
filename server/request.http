@@ -122,6 +122,7 @@ Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
   "video": "bbc.mp4",
   "type": "openai-whisper",
   "gender": "female",
+  "noise": true,
   "adSubtitle": true,
   "retainSound": false
 }

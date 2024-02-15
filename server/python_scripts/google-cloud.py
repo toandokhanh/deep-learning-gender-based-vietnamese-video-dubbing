@@ -20,6 +20,8 @@ import utils.overlay_audio_on_video as overlay_audio_on_video #04
 import utils.createVideoOutput as createVideoOutput #05
 import json
 from time import gmtime, strftime
+import shutil
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -41,8 +43,8 @@ def main():
                         help='---> truyền ngôn ngữ file cần xuất')
     parser.add_argument('-txt', '--file_txt', 
                         help='---> chuyển về folder srt thành txt để so sánh độ chính xác')
-    parser.add_argument('-noise','--algorithm_noise',default="deep",
-                        help="---> Chọn thuật toán giảm nhiễu")
+    parser.add_argument("-noise", "--algorithm_noise", type=str2bool, default=False,
+                        help="Chọn thuật toán giảm nhiễu")
     parser.add_argument('-n','--new_name',
                         help="---> Đặt lại với tên mới")
     parser.add_argument("--gender", type=str, default="auto", choices=[
@@ -92,22 +94,15 @@ def main():
         newname = name
     
     if noises:
-        # Giảm nhiễu dùng thuật toán deepfilter
-        if noises == 'deep':
-            noise_deepfilternet(path+name+'.wav',path)
-            deep = '_DeepFilterNet3.wav'
-            rename(path+name+deep,path+newname+'_output.wav')
-            # wav_to_flac(path+newname+'.wav',path+newname+'.flac')
-
-            pass
-        # Giải thuật giảm nhiễu Noisereduce (không cố định)
-        elif noises == 'noise':
-            noise_reduce(path+name+'.wav',path+newname+'_output.wav')
-            # wav_to_flac(path+newname+'.wav',path+newname+'.flac')
-        else:
-        # Không chọn giải thuật
-            rename(path+name+'.wav',path+newname+'.wav')
-            pass
+        print("Có lọc nhiễu")
+        noise_deepfilternet(path+name+'.wav',path)
+        deep = '_DeepFilterNet3.wav'
+        rename(path+name+deep,path+newname+'_output.wav')
+        pass
+    else:
+        print("Không lọc nhiễu")
+        copy_and_rename_file(path+name+'.wav',path+newname+'_output.wav')
+        pass
     source = path+newname+'_output.wav'
     # Tạo phụ đề
     createsub.main(source,lang_in,lang_out)
@@ -210,6 +205,16 @@ def noise_reduce(file,file_out):
 def rename(filename,newname): 
     os.rename(filename, newname)
 
+
+def copy_and_rename_file(source_file, destination_file):
+    """
+    Copy a file from source location to destination location with renaming.
+    
+    Args:
+    - source_file (str): Path to the source file.
+    - destination_file (str): Path to the destination file with the new name.
+    """
+    shutil.copyfile(source_file, destination_file)
 
 
 def wav_to_flac(filename,output):
