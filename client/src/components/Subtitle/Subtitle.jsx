@@ -16,7 +16,7 @@ function Subtitle() {
   const [loading, setLoading] = useState(false);
   const [adSubtitle, setAdSubtitle] = useState(true);
   const [retainSound, setRetainSound] = useState(true);
-  const [noise, setNoise] = useState(false);
+  const [noise, setNoise] = useState(true);
   const navigate = useNavigate();
   const spinnerStyle = {
     position: 'fixed',
@@ -115,7 +115,7 @@ function Subtitle() {
     <>
         <CustomNavbar />
         <div className='container-video'>
-        <h2>Create voiceover videos with video files</h2>
+        <h2>Create a narrated video using a video file</h2>
         <br />
         <Form onSubmit={handleSubmit}>
             <Form.Group>
@@ -209,7 +209,7 @@ function Subtitle() {
             <Form.Group>
               <Form.Check 
                 type="checkbox" 
-                label="Giử lại âm thanh gốc của video"
+                label="Giử lại âm thanh gốc của video (Thuyết minh)"
                 checked={retainSound}
                 onChange={(e) => setRetainSound(e.target.checked)}
               />

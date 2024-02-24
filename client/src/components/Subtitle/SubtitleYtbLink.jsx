@@ -17,7 +17,7 @@ function SubtitleYtbLink() {
   const [videoLink, setVideoLink] = useState('');
   const [alert, setAlert] = useState(null)
   const [retainSound, setRetainSound] = useState(true);
-  const [noise, setNoise] = useState(false);
+  const [noise, setNoise] = useState(true);
   const navigate = useNavigate();
   const spinnerStyle = {
     position: 'fixed',
@@ -103,7 +103,7 @@ function SubtitleYtbLink() {
         <CustomNavbar />
         <AlertMessage info={alert} />
         <div className='container-video'>
-        <h2>Create voiceover videos with Youtube Link</h2>
+        <h2>Create a narrated video using a YouTube link</h2>
         <br />
         <Form onSubmit={handleSubmit}>
             <Form.Group>
@@ -203,7 +203,7 @@ function SubtitleYtbLink() {
             <Form.Group>
               <Form.Check 
                 type="checkbox" 
-                label="Giử lại âm thanh gốc của video"
+                label="Giử lại âm thanh gốc của video (Thuyết minh)"
                 checked={retainSound}
                 onChange={(e) => setRetainSound(e.target.checked)}
               />

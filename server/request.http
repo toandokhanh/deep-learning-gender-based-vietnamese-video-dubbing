@@ -130,13 +130,20 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWFhN
 #### lấy ra toàn bộ video
 GET http://localhost:5000/api/video/getallvideo/subtitle
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWFhNzZmYTM5YzNkNDAwY2I5N2JhOGMiLCJpYXQiOjE3MDU2NzAzOTR9.qhov3mNQIlNsVezUfwe1evGZepAZ3P0Nxbzm7WNLnj0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWFiODdjZTdhMzNmOGUyYzE3OWUyZTciLCJpYXQiOjE3MDU4MzQ0MTF9.7itapkQ7ukA3CMRMc_K40O5Vzg05gIiubGDb6UkKe2o
 
 
 #### lấy ra toàn bộ chi tiết 1 video
-GET http://localhost:5000/api/video/get/subtitle/detail/20240119_150954
+GET http://localhost:5000/api/video/get/subtitle/detail/20240120_100252
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWFhNzZmYTM5YzNkNDAwY2I5N2JhOGMiLCJpYXQiOjE3MDU2NzAzOTR9.qhov3mNQIlNsVezUfwe1evGZepAZ3P0Nxbzm7WNLnj0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWFiODdjZTdhMzNmOGUyYzE3OWUyZTciLCJpYXQiOjE3MDU4MzQ0MTF9.7itapkQ7ukA3CMRMc_K40O5Vzg05gIiubGDb6UkKe2o
+
+
+#### Xóa 1 video
+DELETE http://localhost:5000/api/video/delete/20240120_084520
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWFiODdjZTdhMzNmOGUyYzE3OWUyZTciLCJpYXQiOjE3MDU4MzQ0MTF9.7itapkQ7ukA3CMRMc_K40O5Vzg05gIiubGDb6UkKe2o
+
 
 
 

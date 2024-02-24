@@ -168,6 +168,36 @@ class VideoController{
             res.status(500).json({ success: false, message: 'Server internal error' });
         }
     }
+
+
+    async deleteSubtitle(req, res) {
+        const videoId = req.params.id
+        if (!videoId)
+            return res
+                .status(400)
+                .json({ success: false, message: 'Video ID not found' })
+        try {
+            const video = await Video.findOne({ date_time: videoId });
+            if (!video)
+                return res
+                    .status(400)
+                    .json({ success: false, message: 'Video not found' }) 
+            const videoResult = await ResultSubtitle.findOne({ _id: video.resultSubtitle});
+            if(!videoResult)
+                return res
+                        .status(400)
+                        .json({ success: false, message: 'Result subtitle not found!' })
+            // all good
+            await ResultSubtitle.deleteOne({ _id: videoResult._id });
+            await Video.deleteOne({ _id: video._id })
+            return res
+                .status(200)
+                .json({ success: true, message: 'Video deleted successfully'})
+        } catch (error) {
+            console.log(error);
+                    res.status(500).json({success: false, message:'Internal Server Error'});
+        }
+    }
 }
 
 

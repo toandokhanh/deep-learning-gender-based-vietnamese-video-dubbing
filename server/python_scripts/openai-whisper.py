@@ -18,6 +18,10 @@ import uuid
 import re
 import json
 from time import gmtime, strftime
+import logging
+
+# Thiết lập cấu hình logging
+logging.basicConfig(filename='logfile.log', level=logging.ERROR, format='%(asctime)s - %(message)s')
 def main():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -53,6 +57,7 @@ def main():
                         "transcribe", "translate"], help="whether to perform X->X speech recognition ('transcribe') or X->English translation ('translate')")
     parser.add_argument("--l_in", type=str, default="auto", choices=["auto","af","am","ar","as","az","ba","be","bg","bn","bo","br","bs","ca","cs","cy","da","de","el","en","es","et","eu","fa","fi","fo","fr","gl","gu","ha","haw","he","hi","hr","ht","hu","hy","id","is","it","ja","jw","ka","kk","km","kn","ko","la","lb","ln","lo","lt","lv","mg","mi","mk","ml","mn","mr","ms","mt","my","ne","nl","nn","no","oc","pa","pl","ps","pt","ro","ru","sa","sd","si","sk","sl","sn","so","sq","sr","su","sv","sw","ta","te","tg","th","tk","tl","tr","tt","uk","ur","uz","vi","yi","yo","zh"], 
     help="What is the origin language of the video? If unset, it is detected automatically.")
+
     time_text = str(strftime("%Y%m%d_%H%M%S", gmtime())) 
     start_time = datetime.now()
     args = parser.parse_args().__dict__
@@ -75,6 +80,8 @@ def main():
     ms_start : int = args.pop("ms_start")
     os.makedirs(output_dir, exist_ok=True)
 
+    logging.error('Command: python3 openai-whisper.py %s --l_in %s -r %d -v %d --ad_subtitle_en %r --retain_sound %r -noise %r --gender %s', 
+                    path, language, rate, volume, ad_subtitle_en, retain_sound, algorithm_noise, gender)
     if input_arg.startswith('https://www.youtube.com'):
         video_path = download_youtube_video(input_arg, '../public/videos')
         print("Video youtube đã được lưu vào: "+ video_path)
@@ -153,7 +160,7 @@ def main():
         seconds = time_difference.total_seconds()
         print("Thời gian thực thi: "+str(seconds))
         
-        return {"date_time":time_text,
+        result = {"date_time":time_text,
                 "path_video": input_arg,
                 "capacity": capacity,
                 "time": time,
@@ -170,6 +177,9 @@ def main():
                 "video_explanation_sub":ad_subtitle_video_path,
                 "execution_time": str(seconds)
                 }
+        # Lưu kết quả vào log
+        logging.error('Result: %s', result)
+        return result
 
 def get_audio(paths):
     temp_dir = tempfile.gettempdir()

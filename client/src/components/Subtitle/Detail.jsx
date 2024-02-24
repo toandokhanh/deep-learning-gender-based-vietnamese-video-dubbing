@@ -5,8 +5,10 @@ import { useParams } from 'react-router-dom';
 import { apiUrl } from '../../contexts/constant';
 import { SUBTITLE_FILE_API } from '../../contexts/constant';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import '../../App.css'
 function SubtitleDetail() {
+  const navigate = useNavigate();
   const params = useParams();
   const [detailResult, setDetailResult] = useState();
   
@@ -21,10 +23,21 @@ function SubtitleDetail() {
       });
   }, []);
   
-  if (!detailResult) return <>
-
-  </>
+  if (!detailResult) return <></>
   const {videoSubtitle, video_explanation, video_explanation_sub, srt_original, srt_translated, srt_labeled, audio_original, audio_filtered, audio_described, audio_overlay_described, execution_time, type} = detailResult.result
+  
+  const videoDelete = async () => {
+    try {
+      const response = await axios.delete(`${apiUrl}/video/delete/${params.id}`);
+      if (response.data.success) {
+        console.log('Server response:', response.data.message);
+        navigate('/history/subtitle');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      throw error; 
+    }
+  }
   return (
     <>
     <CustomNavbar/>
@@ -41,7 +54,7 @@ function SubtitleDetail() {
                     width="700"
                     height="470"
                     controls
-                >
+                    >
                     <source
                     src={`${SUBTITLE_FILE_API}/${audio_original.split('.')[0]}.mp4`}
                     type="video/mp4"
@@ -175,6 +188,20 @@ function SubtitleDetail() {
                     </Col>
                     - Thời gian thực thi: {execution_time} <br/>
                     - Phương pháp Speech-to-Text: {type}
+                    <br/>
+                    <br/>
+                    <Button
+                        className="change"
+                        style={{
+                        cursor: 'pointer',
+                        backgroundColor: '#563D7C',
+                        color: '#ffffff', 
+                        }}
+                        data-name="filename"
+                        onClick={videoDelete}
+                    >
+                        Xóa video
+                    </Button>
                   </Container>
                 </div>
             </div>

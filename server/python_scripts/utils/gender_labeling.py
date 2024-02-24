@@ -240,26 +240,52 @@ import tempfile  # Add this import
 
 #     return predicted_label
 
+# def predict_gender(audio_path):
+#     segmenter = Segmenter()
+#     segments = segmenter(audio_path)
+#     labels = {'female': 0, 'male': 0}
+    
+#     for segment in segments:
+#         label, _, _ = segment
+#         if label in ['female', 'male']:
+#             labels[label] += 1
+
+#     total_labels = labels['male'] + labels['female']
+    
+#     if total_labels > 0:
+#         probability_male = labels['male'] / total_labels
+#         predicted_label = 1 if probability_male > 0.5 else 0
+#     else:
+#         # Handle the case when there are no labels
+#         predicted_label = 1  # or any default value you prefer
+
+#     return predicted_label
+
 def predict_gender(audio_path):
-    segmenter = Segmenter()
-    segments = segmenter(audio_path)
-    labels = {'female': 0, 'male': 0}
-    
-    for segment in segments:
-        label, _, _ = segment
-        if label in ['female', 'male']:
-            labels[label] += 1
+    try:
+        segmenter = Segmenter()
+        segments = segmenter(audio_path)
+        labels = {'female': 0, 'male': 0}
+        
+        for segment in segments:
+            label, _, _ = segment
+            if label in ['female', 'male']:
+                labels[label] += 1
 
-    total_labels = labels['male'] + labels['female']
-    
-    if total_labels > 0:
-        probability_male = labels['male'] / total_labels
-        predicted_label = 1 if probability_male > 0.5 else 0
-    else:
-        # Handle the case when there are no labels
-        predicted_label = 1  # or any default value you prefer
+        total_labels = labels['male'] + labels['female']
+        
+        if total_labels > 0:
+            probability_male = labels['male'] / total_labels
+            predicted_label = 1 if probability_male > 0.5 else 0
+        else:
+            # Handle the case when there are no labels
+            predicted_label = 1  # or any default value you prefer
 
-    return predicted_label
+        return predicted_label
+    except Exception as e:
+        print(f"An error occurred while segmenting the audio: {e}")
+        return 1
+
 
 
 def time_to_ms(time_str):
