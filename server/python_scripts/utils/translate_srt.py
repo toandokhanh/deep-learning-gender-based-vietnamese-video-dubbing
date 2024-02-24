@@ -6,10 +6,19 @@ def parse_srt(file_content):
     pattern = re.compile(r'(\d+)\n(\d{2}:\d{2}:\d{2},\d{3}) --> (\d{2}:\d{2}:\d{2},\d{3})\n(.*?)\n\n', re.DOTALL)
     return pattern.findall(file_content)
 
+# def translate_text(text, dest_lang):
+#     translator = Translator()
+#     translation = translator.translate(text, dest=dest_lang)
+#     return translation.text
+
 def translate_text(text, dest_lang):
     translator = Translator()
-    translation = translator.translate(text, dest=dest_lang)
-    return translation.text
+    try:
+        translation = translator.translate(text, dest=dest_lang)
+        return translation.text
+    except Exception as e:
+        print(f"Translation failed: {e}")
+        return 
 
 def translate_and_save_srt(file_path, dest_lang='vi'):
     with open(file_path, 'r', encoding='utf-8') as file:

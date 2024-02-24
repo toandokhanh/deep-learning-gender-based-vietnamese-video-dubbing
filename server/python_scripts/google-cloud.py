@@ -21,6 +21,10 @@ import utils.createVideoOutput as createVideoOutput #05
 import json
 from time import gmtime, strftime
 import shutil
+import logging
+
+# Thiết lập cấu hình logging
+logging.basicConfig(filename='logfile.log', level=logging.ERROR, format='%(asctime)s - %(message)s')
 
 
 def main():
@@ -51,6 +55,8 @@ def main():
                             "auto", "female", "male"], help="Gender recognition for Text To Speech model")
 
     args = parser.parse_args()
+    logging.error('Command: python3 google-cloud.py %s --l_in %s -r %d -v %d --ad_subtitle_en %r --retain_sound %r -noise %r --gender %s', 
+                    args.source_path, args.l_in, args.rate, args.volume, args.ad_subtitle_en, args.retain_sound, args.algorithm_noise, args.gender)
 
     try: 
         newname = args.new_name
@@ -168,7 +174,7 @@ def main():
     time_difference = end_time - start_time
     seconds = time_difference.total_seconds()
     print("Thời gian thực thi là: "+ str(seconds))
-    return {
+    result = {
             "date_time": time_text,
             "path_video": video_input,
             "capacity": capacity,
@@ -186,6 +192,8 @@ def main():
             "video_explanation_sub":ad_subtitle_video_path,
             "execution_time" : str(seconds)
             }
+    logging.error('Result: %s', result)
+    return result
     
 def mp4_to_wav(filename,output,name):
     os.system('ffmpeg -i {} -ar 44100 {}/{}.wav'.format(filename,output,name))

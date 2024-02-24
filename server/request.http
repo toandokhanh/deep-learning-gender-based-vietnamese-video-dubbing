@@ -134,9 +134,16 @@ Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
 
 
 #### lấy ra toàn bộ chi tiết 1 video
-GET http://localhost:5000/api/video/get/subtitle/detail/20240119_150954
+GET http://localhost:5000/api/video/get/subtitle/detail/20240120_100252
 Content-Type: application/json
 Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
+
+
+#### Xóa 1 video
+DELETE http://localhost:5000/api/video/delete/20240120_084520
+Content-Type: application/json
+Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
+
 
 
 
