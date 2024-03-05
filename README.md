@@ -21,7 +21,6 @@ The project's purpose is to create high-quality voice-over or voice-over videos 
 ![alt text](images/result_4typedata.png)
 
 ## System interface
-![alt text](images/image.png)
 
 ![alt text](images/giaodien1_v2.png)
 
