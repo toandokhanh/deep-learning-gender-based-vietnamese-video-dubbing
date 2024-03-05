@@ -1,1 +1,7 @@
 *.ipynb linguist-language=python
+*.py linguist-language=python
+*.js linguist-language=javascript
+*.html linguist-language=html
+*.sh linguist-language=shell
+*.scss linguist-language=scss
+*.css linguist-language=css
