@@ -1,0 +1,48 @@
+h1 {
+  color: red;
+}
+
+.logo-login {
+  margin: 40px auto;
+}
+
+.right {
+  margin-left: 70px;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex: 5;
+}
+
+.App {
+  text-align: center;
+}
+
+.video {
+  border: 3px solid black;
+}
+
+.App-header {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.left {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  flex: 4;
+  margin-right: 30px;
+}
+
+.container-video {
+  max-width: 1200px;
+  margin: 50px auto;
+}
+.container-video h2 {
+  text-align: center;
+  text-transform: uppercase;
+}/*# sourceMappingURL=App.css.map */
