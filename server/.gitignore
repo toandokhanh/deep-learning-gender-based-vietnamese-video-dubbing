@@ -1,5 +1,0 @@
-.env
-/node_modules
-/public/videos
-/tmp
-/python_scripts/createsub.py
