@@ -1,4 +1,3 @@
 *.ipynb linguist-language=python
 *.py linguist-language=python
 *.js linguist-language=javascript
-*.sh linguist-language=shell
