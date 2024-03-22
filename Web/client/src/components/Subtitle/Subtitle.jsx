@@ -115,7 +115,7 @@ function Subtitle() {
     <>
         <CustomNavbar />
         <div className='container-video'>
-        <h2>Create a narrated video using a video file</h2>
+        <h2>TẠO VIDEO Thuyết minh hoặc lồng tiếng BẰNG tệp video (.mp4)</h2>
         <br />
         <Form onSubmit={handleSubmit}>
             <Form.Group>
