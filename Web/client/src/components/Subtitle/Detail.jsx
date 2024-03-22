@@ -92,7 +92,7 @@ function SubtitleDetail() {
                 </Button>
                 </div>
                 <br/>
-                <h4>Video thuyết minh</h4>
+                <h4>Video thuyết minh\lồng tiếng</h4>
                 <video className='video'
                     id="my-video-player"
                     style={{ border: '3px solid black' }}
@@ -125,7 +125,7 @@ function SubtitleDetail() {
                 <br/>
                 { video_explanation_sub && (
                   <div>
-                    <h4>Video thuyết minh có phụ đề</h4>
+                    <h4>Video thuyết minh\lồng tiếng có phụ đề gốc</h4>
                     <video className='video'
                         id="my-video-player"
                         style={{ border: '3px solid black' }}
@@ -180,7 +180,7 @@ function SubtitleDetail() {
                         Your browser does not support the audio element.
                       </audio>
                     </Col>
-                    - Audio thuyết minh được phủ với audio gốc:
+                    - Audio lồng tiếng được phủ với audio gốc:
                     <Col xs={6} className="text-center">
                       <audio controls src={`${SUBTITLE_FILE_API}/${audio_overlay_described}`}>
                         Your browser does not support the audio element.

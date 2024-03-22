@@ -37,7 +37,8 @@ function SubtitleYtbLink() {
 
   // Function to check if the input is a valid YouTube link
   const isValidYouTubeLink = (link) => {
-    const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com\/(embed\/|v\/|watch\?v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    // const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com\/(embed\/|v\/|watch\?v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com\/(embed\/|v\/|watch\?v=)|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/;
     return youtubeRegex.test(link);
   };
   
@@ -103,7 +104,7 @@ function SubtitleYtbLink() {
         <CustomNavbar />
         <AlertMessage info={alert} />
         <div className='container-video'>
-        <h2>Create a narrated video using a YouTube link</h2>
+        <h2>TẠO VIDEO thuyết minh hoặc lồng tiếng BẰNG LIÊN KẾT YOUTUBE </h2>
         <br />
         <Form onSubmit={handleSubmit}>
             <Form.Group>
