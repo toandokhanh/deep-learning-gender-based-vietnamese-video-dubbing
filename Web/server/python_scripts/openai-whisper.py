@@ -523,6 +523,7 @@ import utils.gender_labeling as gender_labeling
 import utils.SRTToWAV as SRTToWAV
 import utils.createVideoOutput as createVideoOutput
 from utils.srtToTxt import srt_to_txt_v2
+from utils.removeSpeech import removeSpeech
 from utils.utils import filename, str2bool, write_srt, mp4_to_wav, noise_deepfilternet, read_video_info, srt_to_txt
 import pytube
 import uuid
@@ -530,7 +531,7 @@ import re
 import json
 from time import gmtime, strftime
 import logging
-
+import youtube_dl
 # Thiết lập cấu hình logging
 logging.basicConfig(filename='logfile.log', level=logging.ERROR, format='%(asctime)s - %(message)s')
 def main():
@@ -636,7 +637,12 @@ def main():
         # text to speech recognition
         captions = SRTToWAV.process_srt(srt_labeled)
         output_audio_path = SRTToWAV.text_to_speech(captions, srt_labeled, rate, volume)
-        audiodescribed_wav_path = overlay_audio_on_video.process_audio(path_wav, output_audio_path, ms_start, retain_sound)
+        if retain_sound:
+            audiodescribed_wav_path = overlay_audio_on_video.process_audio(path_wav, path_wav, output_audio_path, ms_start, retain_sound)
+        else:
+            audio_removed_speech = removeSpeech(path_wav)
+            audiodescribed_wav_path = overlay_audio_on_video.process_audio(path_wav, audio_removed_speech, output_audio_path, ms_start, retain_sound)
+            
         audiodescribed_video_path = overlay_audio_on_video.merge_video_and_audio(input_arg, audiodescribed_wav_path)
         ad_subtitle_video_path= None
         if ad_subtitle_en:
@@ -725,6 +731,36 @@ def download_youtube_video(url, path):
     
     return video_path
 
+# def download_youtube_video(url, path):
+#     # Tạo thư mục nếu nó chưa tồn tại
+#     os.makedirs(path, exist_ok=True)
+
+#     # Tạo một ydl_opts để cấu hình tùy chọn tải xuống
+#     ydl_opts = {
+#         'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
+#         'outtmpl': os.path.join(path, '%(title)s.%(ext)s')
+#     }
+
+#     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+#         # Tải xuống video từ URL cung cấp
+#         info_dict = ydl.extract_info(url, download=True)
+#         video_title = info_dict.get('title', None)
+#         if video_title:
+#             # Xử lý tên video nếu cần
+#             video_title = re.sub(r'[\/:*?"<>|]', '_', video_title)  # Loại bỏ các ký tự không hợp lệ trong tên tệp
+
+#             # Đổi tên video tải xuống thành tên tiêu chuẩn
+#             video_name = f"{video_title}.mp4"
+#             downloaded_file = os.path.join(path, video_name)
+
+#             # Kiểm tra nếu tệp đã tồn tại, nếu có, thêm một số duy nhất vào cuối
+#             if os.path.isfile(downloaded_file):
+#                 base, ext = os.path.splitext(downloaded_file)
+#                 downloaded_file = f"{base}_{uuid.uuid4().hex[:8]}{ext}"
+
+#             return downloaded_file
+#         else:
+#             return None  # Trả về None nếu không có thông tin về tiêu đề video
 
 if __name__ == '__main__':
     result = main()
