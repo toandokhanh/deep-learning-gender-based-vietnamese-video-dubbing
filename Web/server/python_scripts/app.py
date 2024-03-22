@@ -308,19 +308,52 @@ def subtitlev1():
     print(command)
     try:
         result = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT, text=True)
-        
         json_start = result.find('{')
         json_end = result.rfind('}') + 1
         json_data = result[json_start:json_end]
 
+        # Tìm vị trí của dấu `{` đầu tiên trong chuỗi JSON
+        first_bracket_index = json_data.find("{")
+
+        # Nếu tìm thấy dấu `{` đầu tiên, tiếp tục tìm vị trí của dấu `}` đầu tiên
+        if first_bracket_index != -1:
+            bracket_count = 0
+            for i in range(first_bracket_index, len(json_data)):
+                if json_data[i] == '{':
+                    bracket_count += 1
+                elif json_data[i] == '}':
+                    bracket_count -= 1
+                    if bracket_count == 0:
+                        last_bracket_index = i + 1
+                        break
+
+        # Nếu tìm thấy cả dấu `{` đầu tiên và `}` đầu tiên, chỉ lấy phần JSON
+        if first_bracket_index != -1 and last_bracket_index != -1:
+            json_data = json_data[first_bracket_index:last_bracket_index]
+
+        print('json_data:')
+        print(json_data)
+        print('json_data:')
+        # Parse chuỗi JSON thành dictionary
         result_dict = json.loads(json_data)
+        print('result_dict:')
+        print(result_dict)
+        print('result_dict:')
 
         return jsonify(result_dict), 200
     except subprocess.CalledProcessError as e:
         error_message = f"Error executing command: {e.output}"
         return jsonify({"error": error_message}), 500
-
-
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 if __name__ == '__main__':
     app.run(port=6000) 
     app.run(debug=True)
+
+
+
+
+
+
+
+

@@ -3,16 +3,19 @@ from moviepy.editor import VideoFileClip, AudioFileClip
 from pydub import AudioSegment
 import os
 
-def process_audio(input_path1, input_path2, ms_start=0, retain_sound=True):
+# process_audio - V2
+def process_audio(input_path_dir ,input_path1, input_path2, ms_start=0, retain_sound=True):
     sound1 = AudioSegment.from_file(input_path1, format="wav")
     sound2 = AudioSegment.from_file(input_path2, format="wav")
+
     # Decrease the volume of the first input audio by 6 dB
-    if(retain_sound):
-        quieter = sound1 - 9
+    if retain_sound:
+        quieter = sound1 - 9 # thuyết minh
     else:
-        quieter = sound1 - 1000
+        quieter = sound1 - 1 # lồng tiếng
+    
     # Assuming the translated audio file has the same name with "_translated" added
-    output_path = os.path.splitext(input_path1)[0] + "_audiodescribed.wav"
+    output_path = os.path.splitext(input_path_dir)[0] + "_audiodescribed.wav"
     # If the translated audio file has a different naming convention, update the output_path accordingly
     # Overlay the quieter audio on the second input audio starting from ms_start milliseconds
     overlay = quieter.overlay(sound2, position=ms_start)
@@ -20,6 +23,26 @@ def process_audio(input_path1, input_path2, ms_start=0, retain_sound=True):
     overlay.export(output_path, format="wav")
     return output_path
 
+# process_audio - V1
+# def process_audio(input_path1, input_path2, ms_start=0, retain_sound=True):
+#     sound1 = AudioSegment.from_file(input_path1, format="wav")
+#     sound2 = AudioSegment.from_file(input_path2, format="wav")
+#     # Decrease the volume of the first input audio by 6 dB
+#     if(retain_sound):
+#         quieter = sound1 - 9 # video thuyết minh
+#     else:
+#         quieter = sound1 - 1000 # video lồng tiếng
+#     # Assuming the translated audio file has the same name with "_translated" added
+#     output_path = os.path.splitext(input_path1)[0] + "_audiodescribed.wav"
+#     # If the translated audio file has a different naming convention, update the output_path accordingly
+#     # Overlay the quieter audio on the second input audio starting from ms_start milliseconds
+#     overlay = quieter.overlay(sound2, position=ms_start)
+#     # Export the final audio file
+#     overlay.export(output_path, format="wav")
+#     return output_path
+
+
+# process_audio - V0
 # def process_audio(input_path1, input_path2, ms_start=0):
 #     # Load the audio files
 #     sound1 = AudioSegment.from_file(input_path1, format="wav")

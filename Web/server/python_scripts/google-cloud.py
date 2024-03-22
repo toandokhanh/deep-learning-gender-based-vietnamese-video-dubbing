@@ -22,6 +22,8 @@ import json
 from time import gmtime, strftime
 import shutil
 import logging
+from utils.removeSpeech import removeSpeech
+
 
 # Thiết lập cấu hình logging
 logging.basicConfig(filename='logfile.log', level=logging.ERROR, format='%(asctime)s - %(message)s')
@@ -66,6 +68,7 @@ def main():
         lang_out = args.l_out
         path_txt = args.file_txt
         ad_subtitle_en: bool = args.ad_subtitle_en
+        retain_sound: bool = args.retain_sound
     except:
         print('')
     
@@ -156,10 +159,14 @@ def main():
     captions = SRTToWAV.process_srt(srt_labeled)
     output_audio_path = SRTToWAV.text_to_speech(captions, srt_labeled, args.rate, args.volume)
     print(f"path wav thuyết minh: {output_audio_path}")
+    if retain_sound:
+        audiodescribed_wav_path = overlay_audio_on_video.process_audio(wav_input, wav_input, output_audio_path, args.ms_start, retain_sound)
+        print("AUDIO THUYẾT MINH: path wav lồng tiếng được phủ với wav gốc:", audiodescribed_wav_path)
+    else:
+        audio_removed_speech = removeSpeech(wav_input)
+        audiodescribed_wav_path = overlay_audio_on_video.process_audio(wav_input, audio_removed_speech, output_audio_path, args.ms_start, retain_sound)
+        print("AUDIO LỒNG TIẾNG: path wav lồng tiếng được phủ với wav gốc:", audiodescribed_wav_path)
 
-    audiodescribed_wav_path = overlay_audio_on_video.process_audio(wav_input, output_audio_path, args.ms_start, args.retain_sound)
-    print("path wav thuyết minh được phủ với wav gốc:", audiodescribed_wav_path)
-    
     audiodescribed_video_path = overlay_audio_on_video.merge_video_and_audio(video_input, audiodescribed_wav_path)
     print("path video thuyết minh:", audiodescribed_video_path)
     print("Hoàn thành bước 4 tạo video thuyết minh")
