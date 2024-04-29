@@ -226,8 +226,8 @@ function Subtitle() {
               />
             </Form.Group>
             <br/>
-            <Button variant="primary" type="submit">
-            Submit
+            <Button variant="primary" type="submit" style={{backgroundColor: '#563D7C'}}>
+              Submit
             </Button>
         </Form>
         {loading && (
