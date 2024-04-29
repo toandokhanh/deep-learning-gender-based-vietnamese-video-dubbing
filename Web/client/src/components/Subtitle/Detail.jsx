@@ -174,13 +174,13 @@ function SubtitleDetail() {
                             Your browser does not support the audio element.
                           </audio>
                         </Col>
-                    - Audio thuyết minh:
+                    - Audio lồng tiếng:
                     <Col xs={6} className="text-center">
                       <audio controls src={`${SUBTITLE_FILE_API}/${audio_described}`}>
                         Your browser does not support the audio element.
                       </audio>
                     </Col>
-                    - Audio lồng tiếng được phủ với audio gốc:
+                    - Audio thuyết minh:
                     <Col xs={6} className="text-center">
                       <audio controls src={`${SUBTITLE_FILE_API}/${audio_overlay_described}`}>
                         Your browser does not support the audio element.

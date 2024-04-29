@@ -82,6 +82,10 @@ def compare_labels_and_calculate_accuracy(correct_srt_path, predicted_srt_path, 
     unique_labels = set(correct_labels + predicted_labels_temp)
     if len(unique_labels) > 1:
         # Generate classification report only when there are multiple unique labels
+        print("correct_labels")
+        print(correct_labels)
+        print("predicted_labels_temp")
+        print(predicted_labels_temp)
         report = classification_report(correct_labels, predicted_labels_temp, digits=4, zero_division=1)
     else:
         # If there is only one unique label, print a message to log_file
@@ -97,7 +101,7 @@ def main():
     parser = argparse.ArgumentParser(description='Compare labels in two SRT files and calculate accuracy.')
     parser.add_argument('correct_dir', help='Path to the directory containing correct SRT files.')
     parser.add_argument('predicted_dir', help='Path to the directory containing predicted SRT files.')
-    parser.add_argument('--log_file', default="comparison_log.txt", help='Path to the log file.')
+    parser.add_argument('--log_file', default="comparison_log_vtest.txt", help='Path to the log file.')
 
     args = parser.parse_args()
 
