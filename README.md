@@ -50,44 +50,12 @@ Data Consortium (1992)
 ![alt text](images/image-7.png)
 
 ## Result Video
-- Original video
-
-    <video width="640" height="480" controls>
-    <source src="videos/45c723dd.mp4" type="video/mp4">
-    </video>
-
-- Video subtitles
-
-    <video width="640" height="480" controls>
-    <source src="videos/45c723dd_subtitle.mp4" type="video/mp4">
-    </video>
-
-- Video narrated
-
-    <video width="640" height="480" controls>
-    <source src="videos/45c723dd_audiodescribed.mp4" type="video/mp4">
-    </video>
-
-- Narrated video with original subtitles
-
-    <video width="640" height="480" controls>
-    <source src="videos/45c723dd_audiodescribed_explanation.mp4" type="video/mp4">
-    </video>
-
-
-- Video dubbed
-
-    <video width="640" height="480" controls>
-    <source src="videos/a81a62bf_audiodescribed.mp4" type="video/mp4">
-    </video>
-
-- dubbed video with original subtitles
-
-    <video width="640" height="480" controls>
-    <source src="videos/a81a62bf_audiodescribed_explanation.mp4" type="video/mp4">
-    </video>
-
-
+- [Original video](videos/45c723dd.mp4)
+- [Video subtitles](videos/45c723dd_subtitle.mp4)
+- [Video narrated](videos/45c723dd_audiodescribed.mp4)
+- [Narrated video with original subtitles](videos/45c723dd_audiodescribed_explanation.mp4)
+- [Video dubbed](videos/a81a62bf_audiodescribed.mp4)
+- [dubbed video with original subtitles](videos/a81a62bf_audiodescribed_explanation.mp4)
 ## Demo
 - Video dubbed: 
 
