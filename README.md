@@ -6,20 +6,20 @@
 The purpose of the project is to create high quality, highly accurate Vietnamese dubbed or dubbed videos with high subtitle and gender classification models while meeting diverse user needs.
 
 ## How well does it work?
-![alt text](image.png)
+![alt text](images/image.png)
 
 Above is the application's workflow, it must operate through 4 main modules and the modules will depend on each other. The input will be a foreign language video, the output will be a Vietnamese video (with subtitles, dubbing, narrating, dubbing, and narrating subtitles)
 
 #### Module 1
-![alt text](z_module1.jpg)
+![alt text](images/z_module1.jpg)
 #### Module 2
-![alt text](image-1.png)
+![alt text](images/image-1.png)
 #### Module 3
-![alt text](image-2.png)
+![alt text](images/image-2.png)
 #### Module 4.1
-![alt text](image-3.png)
+![alt text](images/image-3.png)
 #### Module 4.2
-![alt text](image-4.png)
+![alt text](images/image-4.png)
 
 ## Gender classification using deep learning methods
 We propose a process. The first step is to apply audio preprocessing, which includes methods such as Noise Reduction, Audio Extraction, and Matched Audio Filtering. Next, we use the MFCC (Mel Frequency Cepstral Cofactors) image preprocessing method. Finally, the input data are fed into the VGG16 and ResNet34 gender classification models. The model is trained to predict gender based on the extracted audio features. The output of the model is a gender label, representing "male" or "female". This process integrates multiple information steps, helping us effectively extract audio features to achieve accurate results in gender classification.
@@ -44,10 +44,10 @@ Data Consortium (1992)
 ![alt text](images/result_4typedata.png)
 
 ## User Interface Design
-![alt text](image-5.png)
-![alt text](image-6.png)
-![alt text](image-8.png)
-![alt text](image-7.png)
+![alt text](images/image-5.png)
+![alt text](images/image-6.png)
+![alt text](images/image-8.png)
+![alt text](images/image-7.png)
 
 ## Result Video
 - Original video
