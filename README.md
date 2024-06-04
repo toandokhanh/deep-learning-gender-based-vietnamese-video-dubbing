@@ -6,8 +6,7 @@
 The purpose of the project is to create high quality, highly accurate Vietnamese dubbed or dubbed videos with high subtitle and gender classification models while meeting diverse user needs.
 
 ## How well does it work?
-![alt text](images/image.png)
-
+![alt text](images/z_workflow_final_final%20(1).jpg)
 Above is the application's workflow, it must operate through 4 main modules and the modules will depend on each other. The input will be a foreign language video, the output will be a Vietnamese video (with subtitles, dubbing, narrating, dubbing, and narrating subtitles)
 
 #### Module 1
@@ -50,44 +49,12 @@ Data Consortium (1992)
 ![alt text](images/image-7.png)
 
 ## Result Video
-- Original video
-
-    <video width="640" height="480" controls>
-    <source src="videos/45c723dd.mp4" type="video/mp4">
-    </video>
-
-- Video subtitles
-
-    <video width="640" height="480" controls>
-    <source src="videos/45c723dd_subtitle.mp4" type="video/mp4">
-    </video>
-
-- Video narrated
-
-    <video width="640" height="480" controls>
-    <source src="videos/45c723dd_audiodescribed.mp4" type="video/mp4">
-    </video>
-
-- Narrated video with original subtitles
-
-    <video width="640" height="480" controls>
-    <source src="videos/45c723dd_audiodescribed_explanation.mp4" type="video/mp4">
-    </video>
-
-
-- Video dubbed
-
-    <video width="640" height="480" controls>
-    <source src="videos/a81a62bf_audiodescribed.mp4" type="video/mp4">
-    </video>
-
-- dubbed video with original subtitles
-
-    <video width="640" height="480" controls>
-    <source src="videos/a81a62bf_audiodescribed_explanation.mp4" type="video/mp4">
-    </video>
-
-
+- [Original video](videos/45c723dd.mp4)
+- [Video subtitles](videos/45c723dd_subtitle.mp4)
+- [Video narrated](videos/45c723dd_audiodescribed.mp4)
+- [Narrated video with original subtitles](videos/45c723dd_audiodescribed_explanation.mp4)
+- [Video dubbed](videos/a81a62bf_audiodescribed.mp4)
+- [dubbed video with original subtitles](videos/a81a62bf_audiodescribed_explanation.mp4)
 ## Demo
 - Video dubbed: 
 
