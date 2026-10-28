@@ -2,7 +2,15 @@ from pathlib import Path
 import subprocess
 import threading
 from flask import Flask, request, jsonify
-from security import authorized, load_env, filename, language, choice, media_path, run_script
+from security import (
+    authorized,
+    load_env,
+    filename,
+    language,
+    choice,
+    media_path,
+    run_script,
+)
 
 HERE = Path(__file__).resolve().parent
 load_env(HERE.parent / ".env")
@@ -10,19 +18,23 @@ app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = 1024 * 1024
 job_lock = threading.Lock()
 
+
 @app.before_request
 def authenticate_worker():
     if not authorized(request.headers.get("X-Service-Token")):
         return jsonify(error="Worker authentication required"), 401
 
+
 @app.errorhandler(ValueError)
 def invalid_input(error):
     return jsonify(error=str(error)), 400
+
 
 @app.errorhandler(subprocess.SubprocessError)
 def processing_failed(error):
     app.logger.warning("Media processing failed (%s)", type(error).__name__)
     return jsonify(error="Media processing failed"), 502
+
 
 @app.errorhandler(OSError)
 def file_error(error):
@@ -31,6 +43,7 @@ def file_error(error):
 
 from security import youtube_url
 import json
+
 
 @app.post("/api/createSubtitleV1")
 def subtitle():
@@ -53,7 +66,11 @@ def subtitle():
             raise ValueError("Invalid voice option")
         args += [flag, value]
     args += ["--gender", choice(data.get("gender", "auto"), {"auto", "male", "female"})]
-    for field, flag in [("noise", "-noise"), ("adSubtitle", "--ad_subtitle_en"), ("retainSound", "--retain_sound")]:
+    for field, flag in [
+        ("noise", "-noise"),
+        ("adSubtitle", "--ad_subtitle_en"),
+        ("retainSound", "--retain_sound"),
+    ]:
         value = data.get(field, False)
         if not isinstance(value, bool):
             raise ValueError("Invalid boolean processing option")
@@ -74,6 +91,7 @@ def subtitle():
         raise ValueError("Unexpected worker result")
     finally:
         job_lock.release()
+
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=6000)

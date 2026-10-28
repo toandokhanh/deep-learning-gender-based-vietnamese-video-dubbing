@@ -27,10 +27,10 @@ const Auth = ({authRoute}) => {
     borderRadius: '5px',
   };
   let body;
-  if(authLoading) 
+  if(authLoading)
     body = (
         <div style={spinnerStyle}>
-          <Spinner animation='border' variant='info'/> 
+          <Spinner animation='border' variant='info'/>
         </div>
       )
   else if (isAuthenticated) return <Navigate to='/subtitle/video-files'/>
@@ -55,7 +55,7 @@ const Auth = ({authRoute}) => {
               <p className='px-3' style={{color: 'hsl(217, 10%, 50.8%)'}}>
               If you find yourself with a foreign language video whose content eludes your understanding or if you seek to seamlessly dub your video into Vietnamese, our platform equipped with a precise and automatic gender recognition model is the ideal solution. Simply sign up (or log in if you already have an account) to craft high-quality videos at no cost.
               </p>
-              
+
             </MDBCol>
             <MDBCol md='6'>
               <MDBCard className='my-5'>

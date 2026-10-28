@@ -2,7 +2,7 @@ const { ownsUpload } = require('../../util/security');
 const Video = require('../models/Video')
 const ResultSubtitle = require('../models/ResultSubtitle')
 const Language = require('../models/Language')
-const request = require('request')
+const workerClient = require('../../util/worker-client')
 const fs = require('fs');
 const path = require('path');
 const { promisify } = require('util');
@@ -92,7 +92,7 @@ class VideoController{
                     return null;
                 }
             }
-            request.post(
+            workerClient.post(
                 {
                     url: apiUrl+'/createSubtitleV1',
                     headers: { 'X-Service-Token': process.env.FLASK_SERVICE_TOKEN },

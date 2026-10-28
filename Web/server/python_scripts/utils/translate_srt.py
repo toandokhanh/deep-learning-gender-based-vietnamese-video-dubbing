@@ -1,15 +1,21 @@
 import re
 import os
-from googletrans import Translator
+from translation import Translator
+
 
 def parse_srt(file_content):
-    pattern = re.compile(r'(\d+)\n(\d{2}:\d{2}:\d{2},\d{3}) --> (\d{2}:\d{2}:\d{2},\d{3})\n(.*?)\n\n', re.DOTALL)
+    pattern = re.compile(
+        r"(\d+)\n(\d{2}:\d{2}:\d{2},\d{3}) --> (\d{2}:\d{2}:\d{2},\d{3})\n(.*?)\n\n",
+        re.DOTALL,
+    )
     return pattern.findall(file_content)
+
 
 # def translate_text(text, dest_lang):
 #     translator = Translator()
 #     translation = translator.translate(text, dest=dest_lang)
 #     return translation.text
+
 
 def translate_text(text, dest_lang):
     translator = Translator()
@@ -18,10 +24,11 @@ def translate_text(text, dest_lang):
         return translation.text
     except Exception as e:
         print(f"Translation failed: {e}")
-        return 
+        return
 
-def translate_and_save_srt(file_path, dest_lang='vi'):
-    with open(file_path, 'r', encoding='utf-8') as file:
+
+def translate_and_save_srt(file_path, dest_lang="vi"):
+    with open(file_path, "r", encoding="utf-8") as file:
         content = file.read()
 
     srt_entries = parse_srt(content)
@@ -34,10 +41,12 @@ def translate_and_save_srt(file_path, dest_lang='vi'):
 
     # Generate output file path
     base_path, file_name = os.path.split(file_path)
-    output_file = os.path.join(base_path, f"{os.path.splitext(file_name)[0]}_translated.srt")
+    output_file = os.path.join(
+        base_path, f"{os.path.splitext(file_name)[0]}_translated.srt"
+    )
 
     # Save translated SRT
-    with open(output_file, 'w', encoding='utf-8') as file:
+    with open(output_file, "w", encoding="utf-8") as file:
         for entry in translated_entries:
             index, start, end, text = entry
             file.write(f"{index}\n{start} --> {end}\n{text}\n\n")

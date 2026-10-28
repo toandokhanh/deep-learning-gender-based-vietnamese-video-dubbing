@@ -14,7 +14,7 @@ function Footer() {
             This represents my graduation thesis project, aimed at automating the creation of subtitles and dubbing for videos, specifically tailored for the Vietnamese audience. The objective is to deliver valuable and highly accurate videos through a comprehensive system consisting of multiple robust modules.
             </p>
           </MDBCol>
-          
+
           <MDBCol lg="4" md="6" className="mb-4 mb-md-0">
             <h5 className="text-uppercase">Contact</h5>
             <ul className="list-unstyled mb-0">

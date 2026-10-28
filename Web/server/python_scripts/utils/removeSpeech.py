@@ -1,25 +1,29 @@
-import os
-from spleeter.separator import Separator
+"""Remove vocals with Demucs; no legacy Spleeter/TensorFlow 2.12 pins."""
 
-# def removeSpeech(audioFile, directory=''):
-#     # Tạo một đối tượng Separator với 2 bóng nhưng không có giọng nói
-#     separator = Separator('spleeter:2stems')
-#     # Phân tách giọng nói và âm thanh xung quanh từ file âm thanh
-#     separator.separate_to_file(audioFile, directory='')
+from pathlib import Path
+import subprocess
+import sys
+
 
 def removeSpeech(audioFile):
-    # Tạo một đối tượng Separator với 2 bóng nhưng không có giọng nói
-    separator = Separator('spleeter:2stems')
-    # Lấy thư mục chứa file âm thanh
-    directory = os.path.dirname(audioFile)
-    # Tạo đường dẫn của thư mục đích
-    destination = os.path.join(directory, os.path.splitext(os.path.basename(audioFile))[0])
-    # Phân tách giọng nói và âm thanh xung quanh từ file âm thanh và lưu vào thư mục đích
-    separator.separate_to_file(audioFile, directory)
-    # Tạo đường dẫn của file accompaniment
-    output_file_path = os.path.join(destination, 'accompaniment.wav')
-    return output_file_path
-
-# Sử dụng hàm
-# output_path = removeSpeech('1.wav')
-# print(output_path)
+    source = Path(audioFile).resolve(strict=True)
+    output = source.parent / "separated"
+    subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "demucs",
+            "--two-stems=vocals",
+            "-n",
+            "htdemucs",
+            "--out",
+            str(output),
+            str(source),
+        ],
+        check=True,
+        timeout=1800,
+    )
+    result = output / "htdemucs" / source.stem / "no_vocals.wav"
+    if not result.is_file():
+        raise RuntimeError("Demucs did not produce accompaniment audio")
+    return str(result)

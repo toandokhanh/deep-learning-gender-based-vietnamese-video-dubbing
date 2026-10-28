@@ -2,7 +2,7 @@
 const videoRouter = require('./video')
 const authRouter = require('./auth')
 const uploadRouter = require('./upload')
-const languageRouter = require('./langauge')
+const languageRouter = require('./languages')
 function route(APP) {
     // APP.use('/api', siteRouter);
     APP.use('/api/video', videoRouter);

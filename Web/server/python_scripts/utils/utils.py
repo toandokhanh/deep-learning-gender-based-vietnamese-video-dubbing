@@ -1,9 +1,10 @@
+from deep_filter import enhance_audio
 import subprocess
-import shlex
 import os
 from typing import Iterator, TextIO
-from moviepy.editor import VideoFileClip
+import json
 import re
+
 
 def read_video_info(filename):
     """
@@ -12,12 +13,28 @@ def read_video_info(filename):
     """
 
     if os.path.exists(filename):
-        clip = VideoFileClip(filename)
-        duration = clip.duration
-        size = os.stat(filename).st_size / 1024 # Chuyển từ byte sang KB
+        probe = subprocess.run(
+            [
+                "ffprobe",
+                "-v",
+                "error",
+                "-show_entries",
+                "format=duration",
+                "-of",
+                "json",
+                filename,
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        duration = float(json.loads(probe.stdout)["format"]["duration"])
+        size = os.stat(filename).st_size / 1024  # Chuyển từ byte sang KB
         return str(int(size)), str(duration)
     else:
         print("Không tìm thấy file!")
+
 
 def str2bool(string):
     string = string.lower()
@@ -26,8 +43,7 @@ def str2bool(string):
     if string in str2val:
         return str2val[string]
     else:
-        raise ValueError(
-            f"Expected one of {set(str2val.keys())}, got {string}")
+        raise ValueError(f"Expected one of {set(str2val.keys())}, got {string}")
 
 
 def format_timestamp(seconds: float, always_include_hours: bool = False):
@@ -68,27 +84,19 @@ def mp4_to_wav(filename):
     name = os.path.splitext(file_name)[0]
     output = os.path.join(base_path, f"{name}.wav")
 
-    subprocess.run(shlex.split(f'ffmpeg -i {filename} -ar 44100 {output}'), check=True, timeout=1800)
+    subprocess.run(
+        ["ffmpeg", "-i", str(filename), "-ar", "44100", str(output)],
+        check=True,
+        timeout=1800,
+    )
 
     return output
 
 
 def noise_deepfilternet(file):
-    base_path, file_name = os.path.split(file)
-    print('base_path')
-    print(base_path)
-    print('file_name')
-    print(file_name)
-    name = os.path.splitext(file_name)[0]
-    print('name')
-    print(name)
-    output = os.path.join(base_path, f"{name}_DeepFilterNet3.wav")
-    subprocess.run(shlex.split('deepFilter {} -o {}'.format(file, base_path)), check=True, timeout=1800)
-    print("Đã giảm tiếng ồn DeepFilterNet")
-    print('')
-    return output
-
-
+    return enhance_audio(
+        file, os.path.dirname(os.path.abspath(file)), suffix="_DeepFilterNet3.wav"
+    )
 
 
 def srt_to_txt(input_srt_path):
@@ -104,19 +112,18 @@ def srt_to_txt(input_srt_path):
     output_txt_path = f"{file_name}.txt"
 
     try:
-        with open(input_srt_path, 'r', encoding='utf-8') as srt_file:
+        with open(input_srt_path, "r", encoding="utf-8") as srt_file:
             # Đọc nội dung từ file srt
             srt_content = srt_file.read()
 
             # Loại bỏ các dấu câu
-            srt_content = re.sub(r'[^\w\s]', '', srt_content)
+            srt_content = re.sub(r"[^\w\s]", "", srt_content)
 
             # Ghi nội dung vào file txt
-            with open(output_txt_path, 'w', encoding='utf-8') as txt_file:
+            with open(output_txt_path, "w", encoding="utf-8") as txt_file:
                 txt_file.write(srt_content)
 
         return output_txt_path
 
     except Exception as e:
         print(f"Lỗi khi chuyển đổi: {e}")
-

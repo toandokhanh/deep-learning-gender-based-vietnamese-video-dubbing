@@ -1,12 +1,12 @@
 import pysrt
 import os
 
-def srt_to_txt(file,out_file,name):
-    subs = pysrt.open(file)
-    with open(out_file+'/'+name+'.txt','w',encoding='utf-8') as f:
-        for sub in subs:
-            f.write(sub.text.lower()+' ')
 
+def srt_to_txt(file, out_file, name):
+    subs = pysrt.open(file)
+    with open(out_file + "/" + name + ".txt", "w", encoding="utf-8") as f:
+        for sub in subs:
+            f.write(sub.text.lower() + " ")
 
 
 def srt_to_txt_v2(input_srt_path):
@@ -20,9 +20,9 @@ def srt_to_txt_v2(input_srt_path):
     try:
         subs = pysrt.open(input_srt_path)
 
-        with open(output_txt_path, 'w', encoding='utf-8') as f:
+        with open(output_txt_path, "w", encoding="utf-8") as f:
             for sub in subs:
-                f.write(sub.text.lower() + ' ')
+                f.write(sub.text.lower() + " ")
 
         print(f"Chuyển đổi thành công. File txt được lưu tại: {output_txt_path}")
         return output_txt_path

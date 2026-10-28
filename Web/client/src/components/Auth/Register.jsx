@@ -28,26 +28,26 @@ function Register() {
   // alert message
   const [alert, setAlert] = useState(null)
   const { firstname, lastname, username, password, comfirmpassword } = registerForm;
-  // handle submit 
+  // handle submit
   const handleRegister = async event => {
     event.preventDefault()
     console.log(firstname, lastname, username, password, comfirmpassword);
     // check password and confirm password
     if(password !== comfirmpassword) {
       setAlert({ type: 'danger', message: 'password and confirm password do not match' })
-			setTimeout(() => setAlert(null), 5000)
+      setTimeout(() => setAlert(null), 5000)
       return
-    } 
+    }
     try {
-			const registerData = await registerUser(registerForm)
-			if (!registerData.success) {
-				setAlert({ type: 'danger', message: registerData.message })
-				setTimeout(() => setAlert(null), 5000)
-			}
-		} catch (error) {
-			console.log(error)
-		}
-	}
+      const registerData = await registerUser(registerForm)
+      if (!registerData.success) {
+        setAlert({ type: 'danger', message: registerData.message })
+        setTimeout(() => setAlert(null), 5000)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <>
     <AlertMessage info={alert} />
@@ -55,23 +55,23 @@ function Register() {
         <h3 className='text-center'>REGISTER</h3> <br></br>
         <MDBRow>
             <MDBCol col='6'>
-              <MDBInput 
-                wrapperClass='mb-4' 
-                name='firstname' 
-                value={firstname} 
-                placeholder='First name' 
-                id='form1' 
-                type='text' 
+              <MDBInput
+                wrapperClass='mb-4'
+                name='firstname'
+                value={firstname}
+                placeholder='First name'
+                id='form1'
+                type='text'
                 required
                 onChange={onChangeRegisterForm}
                 />
             </MDBCol>
             <MDBCol col='6'>
-              <MDBInput 
-                wrapperClass='mb-4' 
+              <MDBInput
+                wrapperClass='mb-4'
                 placeholder='Last name'
                 name='lastname'
-                id='form1' 
+                id='form1'
                 type='text'
                 value={lastname}
                 required
@@ -79,30 +79,30 @@ function Register() {
                 />
             </MDBCol>
         </MDBRow>
-          <MDBInput 
-            wrapperClass='mb-4' 
-            placeholder='Username' 
-            id='form1' 
+          <MDBInput
+            wrapperClass='mb-4'
+            placeholder='Username'
+            id='form1'
             type='text'
             required
             name='username'
             value={username}
             onChange={onChangeRegisterForm}
             />
-          <MDBInput 
-            wrapperClass='mb-4' 
-            placeholder='Password' 
-            id='form1' 
+          <MDBInput
+            wrapperClass='mb-4'
+            placeholder='Password'
+            id='form1'
             type='password'
             value={password}
             name='password'
             required
             onChange={onChangeRegisterForm}
             />
-          <MDBInput 
-            wrapperClass='mb-4' 
+          <MDBInput
+            wrapperClass='mb-4'
             placeholder='Confirm password'
-            id='form1' 
+            id='form1'
             type='password'
             value={comfirmpassword}
             name='comfirmpassword'
@@ -110,10 +110,10 @@ function Register() {
             onChange={onChangeRegisterForm}
             />
         <div className='d-flex mb-4'>
-          <MDBCheckbox 
-          name='flexCheck' 
-          value='' 
-          id='flexCheckDefault' 
+          <MDBCheckbox
+          name='flexCheck'
+          value=''
+          id='flexCheckDefault'
           label ='I have read and agree to the terms' />
         </div>
         <Button className='w-100 mb-4' type='submit' size='md'>sign up</Button>

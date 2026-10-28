@@ -1,17 +1,9 @@
-const { exec } = require('child_process');
-const pythonScriptPath = './python_scripts/app.py'; 
-// Thay thế đường dẫn này bằng đường dẫn thư mục chứa file Python (app.py)
+const { spawn } = require('node:child_process');
+const path = require('node:path');
 
-
-exec('python3 ' + pythonScriptPath, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Lỗi khi chạy mã Python: ${error.message}`);
-      return;
-    }
-    if (stderr) {
-        console.error(`Lỗi khi chạy mã Python: ${stderr}`);
-        return;
-      }
-      // Xử lý kết quả từ mã Python nếu cần
-      console.log(`Kết quả từ mã Python: ${stdout}`);
-    });
+const child = spawn(process.env.PYTHON_BIN || 'python3', [path.join(__dirname, '../python_scripts/app.py')], {
+  cwd: path.join(__dirname, '..'), stdio: 'inherit', shell: false,
+});
+child.on('error', () => { console.error('Could not start Python worker'); process.exitCode = 1; });
+child.on('exit', (code) => { process.exitCode = code ?? 1; });
+for (const signal of ['SIGINT', 'SIGTERM']) process.on(signal, () => child.kill(signal));

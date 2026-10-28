@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react'
 import CustomNavbar from '../Layout/CustomNavbar'
 import { apiUrl} from '../../contexts/constant';
 import axios from 'axios';
-import Table from 'react-bootstrap/Table'; 
+import Table from 'react-bootstrap/Table';
 import { FaRegFileAlt } from 'react-icons/fa';
 import {Link} from 'react-router-dom'
 const History = () => {

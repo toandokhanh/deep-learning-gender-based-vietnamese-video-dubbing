@@ -41,10 +41,10 @@ function SubtitleYtbLink() {
     const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com\/(embed\/|v\/|watch\?v=)|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/;
     return youtubeRegex.test(link);
   };
-  
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
+
     if (isValidYouTubeLink(videoLink)){
         const videoForm = {
             video: videoLink,
@@ -77,13 +77,13 @@ function SubtitleYtbLink() {
         } catch (error) {
         console.error('Error:', error);
         setLoading(false);
-        } 
+        }
     }else {
         // Invalid YouTube link, handle accordingly
         setAlert({ type: 'danger', message: 'Invalid YouTube link: '+videoLink +' ???'})
-				setTimeout(() => setAlert(null), 5000)
+        setTimeout(() => setAlert(null), 5000)
       }
-    
+
   };
 
   useEffect(() => {
@@ -191,8 +191,8 @@ function SubtitleYtbLink() {
             </Form.Group>
             <br/>
             <Form.Group>
-              <Form.Check 
-                type="checkbox" 
+              <Form.Check
+                type="checkbox"
                 label="Tạo video thuyết minh có phụ đề ngôn ngữ gốc"
                 checked={adSubtitle}
                 onChange={(e) => setAdSubtitle(e.target.checked)}
@@ -202,8 +202,8 @@ function SubtitleYtbLink() {
 
             <br/>
             <Form.Group>
-              <Form.Check 
-                type="checkbox" 
+              <Form.Check
+                type="checkbox"
                 label="Giử lại âm thanh gốc của video (Thuyết minh)"
                 checked={retainSound}
                 onChange={(e) => setRetainSound(e.target.checked)}
@@ -212,8 +212,8 @@ function SubtitleYtbLink() {
 
             <br/>
             <Form.Group>
-              <Form.Check 
-                type="checkbox" 
+              <Form.Check
+                type="checkbox"
                 label="Loại bỏ tiếng ồn (tiền xử lý âm thanh)"
                 checked={noise}
                 onChange={(e) => setNoise(e.target.checked)}

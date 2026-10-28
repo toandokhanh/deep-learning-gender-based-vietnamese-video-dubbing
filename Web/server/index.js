@@ -1,7 +1,6 @@
 const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const route = require('./routes')
 const APP = express();
@@ -13,10 +12,9 @@ if (!process.env.ACCESS_TOKEN_SECRET || process.env.ACCESS_TOKEN_SECRET.length <
 }
 if (process.env.ACCESS_TOKEN_SECRET === process.env.FLASK_SERVICE_TOKEN) throw new Error('Use distinct session and worker secrets');
 const PORT = process.env.PORT || 5000
-APP.use(bodyParser.json());
-APP.use(bodyParser.urlencoded({extended :true}));
+APP.use(express.json({ limit: "1mb" }));
+APP.use(express.urlencoded({ extended: false, limit: "1mb" }));
 APP.use(cors({ origin: process.env.CLIENT_ORIGIN || 'http://localhost:3000', credentials: true }));
-APP.use(express.json());
 const verifyToken = require('./app/middleware/auth');
 const { validName, ownsMedia, mediaRoot, rateLimit } = require('./util/security');
 APP.use('/api/auth', rateLimit(20));
