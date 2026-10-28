@@ -16,4 +16,5 @@ router.post('/register', authControllers.register);
 // @access Public
 router.post('/login', authControllers.login);
 
+router.post('/logout', (req, res) => { res.clearCookie('session_token', { path: '/' }); res.json({ success: true }); });
 module.exports = router;

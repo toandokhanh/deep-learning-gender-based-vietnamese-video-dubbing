@@ -1,3 +1,4 @@
+require('dotenv').config({ path: require('path').resolve(__dirname, '../../../.env') });
 const mongoose = require('mongoose');
 const Language = require('../../../app/models/Language');
 const url = process.env.MONGODB_URL || 'mongodb://localhost:27017/ct551_v3';
@@ -407,13 +408,13 @@ const dataLanguage = [
 
 async function seedModels() {
   try {
-    await Language.deleteMany(); 
+    await Language.deleteMany();
     const createdLanguage = await Language.create(dataLanguage);
     console.log('seeder created successfully');
-    process.exit(0); 
+    process.exit(0);
   } catch (error) {
     console.error('seeder created fail', error);
-    process.exit(1); 
+    process.exit(1);
   }
 }
 
@@ -424,6 +425,6 @@ mongoose
   })
   .then(() => {
     console.log('Connected to Mongoose successfully!');
-    seedModels(); 
+    seedModels();
   })
   .catch((error) => console.error('error', error));

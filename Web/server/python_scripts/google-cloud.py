@@ -1,3 +1,5 @@
+import subprocess
+import shlex
 import argparse
 import os,sys
 from regex import F
@@ -31,23 +33,23 @@ logging.basicConfig(filename='logfile.log', level=logging.ERROR, format='%(ascti
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('source_path', 
-                        help="Path to the video or audio file to subtitle", nargs='?') 
-    parser.add_argument('-r', '--rate', type=int, default=10, 
-                        help='Rate for speech (default: 10)') 
-    parser.add_argument('-v', '--volume', type=int, default=50, 
+    parser.add_argument('source_path',
+                        help="Path to the video or audio file to subtitle", nargs='?')
+    parser.add_argument('-r', '--rate', type=int, default=10,
+                        help='Rate for speech (default: 10)')
+    parser.add_argument('-v', '--volume', type=int, default=50,
                         help='Volume for speech (default: 50)')
-    parser.add_argument("-ms", "--ms_start", type=int, default=0, 
+    parser.add_argument("-ms", "--ms_start", type=int, default=0,
                         help="Start time in milliseconds for overlaying the audio on the video.")
-    parser.add_argument("--ad_subtitle_en", type=str2bool, default=False, 
+    parser.add_argument("--ad_subtitle_en", type=str2bool, default=False,
                         help="Create a voice-over video with English subtitles?")
-    parser.add_argument("--retain_sound", type=str2bool, default=True, 
+    parser.add_argument("--retain_sound", type=str2bool, default=True,
                         help="retain the original sound")
-    parser.add_argument('-s', '--l_in',default="en", 
+    parser.add_argument('-s', '--l_in',default="en",
                         help='---> truyền ngôn ngữ file đầu vào')
     parser.add_argument('-d', '--l_out',default="vi",
                         help='---> truyền ngôn ngữ file cần xuất')
-    parser.add_argument('-txt', '--file_txt', 
+    parser.add_argument('-txt', '--file_txt',
                         help='---> chuyển về folder srt thành txt để so sánh độ chính xác')
     parser.add_argument("-noise", "--algorithm_noise", type=str2bool, default=False,
                         help="Chọn thuật toán giảm nhiễu")
@@ -57,10 +59,10 @@ def main():
                             "auto", "female", "male"], help="Gender recognition for Text To Speech model")
 
     args = parser.parse_args()
-    logging.error('Command: python3 google-cloud.py %s --l_in %s -r %d -v %d --ad_subtitle_en %r --retain_sound %r -noise %r --gender %s', 
+    logging.error('Command: python3 google-cloud.py %s --l_in %s -r %d -v %d --ad_subtitle_en %r --retain_sound %r -noise %r --gender %s',
                     args.source_path, args.l_in, args.rate, args.volume, args.ad_subtitle_en, args.retain_sound, args.algorithm_noise, args.gender)
 
-    try: 
+    try:
         newname = args.new_name
         noises = args.algorithm_noise
         # file_output = args.dir_op
@@ -71,8 +73,8 @@ def main():
         retain_sound: bool = args.retain_sound
     except:
         print('')
-    
-    time_text = str(strftime("%Y%m%d_%H%M%S", gmtime())) 
+
+    time_text = str(strftime("%Y%m%d_%H%M%S", gmtime()))
     folder = time_text
     # os.mkdir(folder)
     # os.mkdir(folder)
@@ -87,21 +89,21 @@ def main():
         video_input = video_path
 
     # Lấy ra đường dẫn chứa file
-    path = os.path.dirname(video_input) + '/' 
+    path = os.path.dirname(video_input) + '/'
     # Lấy ra tên file nhập vào có cả duôi file
     file = os.path.basename(video_input)
 
     # Lấy ra tên file
     name1 = os.path.splitext(file)
     name = name1[0]
-    
-    
+
+
     # if not (os.path.exists(path)):
-    #     os.mkdir(path) 
+    #     os.mkdir(path)
     mp4_to_wav(path+file,path,name)
     if not newname:
         newname = name
-    
+
     if noises:
         print("Có lọc nhiễu")
         noise_deepfilternet(path+name+'.wav',path)
@@ -133,8 +135,8 @@ def main():
         else:
             videoOutput(path+file,path+newname+'_output_translated.srt',path+newname+'_subtitle.mp4')
             srt_output = path+newname+'_output_translated.srt'
-    
-    
+
+
     wav_input = path+newname+'.wav' # audio gốc
     wav_output = path+newname+'_output.wav' # audio đã lọc nhiễu
     video_output = path+newname+'_subtitle.mp4' # video phụ đề
@@ -201,12 +203,12 @@ def main():
             }
     logging.error('Result: %s', result)
     return result
-    
+
 def mp4_to_wav(filename,output,name):
-    os.system('ffmpeg -i {} -ar 44100 {}/{}.wav'.format(filename,output,name))
+    subprocess.run(shlex.split('ffmpeg -i {} -ar 44100 {}/{}.wav'.format(filename, output, name)), check=True, timeout=1800)
 
 def noise_deepfilternet(file,file_out):
-    os.system('deepFilter {} -o {}'.format(file,file_out))
+    subprocess.run(shlex.split('deepFilter {} -o {}'.format(file, file_out)), check=True, timeout=1800)
     print("Đã giảm tiếng ồn DeepFilterNet")
     print('')
 
@@ -217,14 +219,14 @@ def noise_reduce(file,file_out):
     sf.write(file_out,reduced_noise, sr, subtype='PCM_24')
     print('')
 
-def rename(filename,newname): 
+def rename(filename,newname):
     os.rename(filename, newname)
 
 
 def copy_and_rename_file(source_file, destination_file):
     """
     Copy a file from source location to destination location with renaming.
-    
+
     Args:
     - source_file (str): Path to the source file.
     - destination_file (str): Path to the destination file with the new name.
@@ -233,13 +235,13 @@ def copy_and_rename_file(source_file, destination_file):
 
 
 def wav_to_flac(filename,output):
-    os.system('ffmpeg -y -f wav -i {} -write_xing 0 -f flac {}'.format(filename,output))
+    subprocess.run(shlex.split('ffmpeg -y -f wav -i {} -write_xing 0 -f flac {}'.format(filename, output)), check=True, timeout=1800)
 
 
 def videoOutput(file_in,file_srt,file_out):
         # print(file_in, file_srt, file_out)
         subtitle_options = "force_style='Fontsize=20,PrimaryColour=&H00FFFFFF,BackColour=&H80000000,BorderStyle=3,Outline=1,Shadow=0'"
-        os.system(f'ffmpeg -y -i "{file_in}" -vf "subtitles=\'{file_srt}\':{subtitle_options},scale=1280:720" "{file_out}"')
+        subprocess.run(shlex.split(f'''ffmpeg -y -i "{file_in}" -vf "subtitles='{file_srt}':{subtitle_options},scale=1280:720" "{file_out}"'''), check=True, timeout=1800)
 
 def checkfolder (path):
     # path = 'tmp'
@@ -260,13 +262,13 @@ def download_youtube_video(url, path):
 
     # Tạo tên file mới
     video_name = f"{video_id}.mp4"
-    
+
     # Thêm đường dẫn đầy đủ
     video_path = os.path.join(path, video_name)
-    
+
     stream = yt.streams.filter(file_extension='mp4').first()
     stream.download(output_path=path, filename=video_name)
-    
+
     return video_path
 if __name__ == "__main__":
     result = main()

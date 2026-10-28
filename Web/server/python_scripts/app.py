@@ -1,359 +1,79 @@
-# # from flask import Flask, request, jsonify
-# # import subprocess
-# # import json
-# # import re
-# # app = Flask(__name__)
-
-# # @app.route('/api/createSubtitleV1', methods=['POST'])
-# # def subtitlev1():
-# #     data = request.get_json()
-# #     video = data.get('video')
-# #     sourceLanguage = data.get('sourceLanguage')
-# #     rate = data.get('rate')
-# #     volume = data.get('volume')
-# #     gender = data.get('gender')
-# #     noise = data.get('noise')
-# #     retainSound = data.get('retainSound')
-# #     adSubtitle = data.get('adSubtitle')
-# #     type = data.get('type')
-
-# #     if video.startswith('https://www.youtube.com'):
-# #         command = f'python3 {type}.py {video}'
-# #     else:
-# #         command = f'python3 {type}.py ../public/videos/{video}'
-    
-# #     if sourceLanguage is not None:
-# #         command += f' --l_in {sourceLanguage}'
-# #     if rate is not None:
-# #         command += f' -r {rate}'
-# #     if volume is not None:
-# #         command += f' -v {volume}'
-# #     if gender is not None:
-# #         command += f' --gender {gender}'
-# #     if noise is not None:
-# #         command += f' -noise={noise}'
-# #     if adSubtitle is not None:
-# #         command += f' --ad_subtitle_en={adSubtitle}'
-# #     if retainSound is not None:
-# #         command += f' --retain_sound={retainSound}'
-# #     print('command')
-# #     print(command)
-# #     try:
-# #         result = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT, text=True)
-# #         json_start = result.find('{')
-# #         json_end = result.rfind('}') + 1
-# #         json_data = result[json_start:json_end]
-# #         print('---json_data---')
-# #         print(json_data)
-# #         result_dict = json.loads(json_data)
-# #         return jsonify(json_data), 200
-# #     except subprocess.CalledProcessError as e:
-# #         error_message = f"Error executing command: {e.output}"
-# #         return jsonify({"error": error_message}), 500
-
-# # if __name__ == '__main__':
-# #     app.run(port=6000) 
-# #     app.run(debug=True)
-
-
-
-# from flask import Flask, request, jsonify
-# import subprocess
-# import json
-# import re
-# app = Flask(__name__)
-
-# @app.route('/api/createSubtitleV1', methods=['POST'])
-# def subtitlev1():
-#     data = request.get_json()
-#     video = data.get('video')
-#     sourceLanguage = data.get('sourceLanguage')
-#     rate = data.get('rate')
-#     volume = data.get('volume')
-#     gender = data.get('gender')
-#     noise = data.get('noise')
-#     retainSound = data.get('retainSound')
-#     adSubtitle = data.get('adSubtitle')
-#     type = data.get('type')
-
-#     if video.startswith('https://www.youtube.com'):
-#         command = f'python3 {type}.py {video}'
-#     else:
-#         command = f'python3 {type}.py ../public/videos/{video}'
-    
-#     if sourceLanguage is not None:
-#         command += f' --l_in {sourceLanguage}'
-#     if rate is not None:
-#         command += f' -r {rate}'
-#     if volume is not None:
-#         command += f' -v {volume}'
-#     if gender is not None:
-#         command += f' --gender {gender}'
-#     if noise is not None:
-#         command += f' -noise={noise}'
-#     if adSubtitle is not None:
-#         command += f' --ad_subtitle_en={adSubtitle}'
-#     if retainSound is not None:
-#         command += f' --retain_sound={retainSound}'
-#     print('command')
-#     print(command)
-#     result = subprocess.check_output(command, shell=True, text=True).strip()
-#     result_list = result.split(', ')
-#     keys = [
-#         'date_time',
-#         'path_video',
-#         'capacity',
-#         'time',
-#         'sourceLanguage',
-#         'audio_original',
-#         'srt_original',
-#         'audio_filtered',
-#         'srt_translated',
-#         'srt_labeled',
-#         'audio_described',
-#         'audio_overlay_described',
-#         'videoSubtitle',
-#         'video_explanation',
-#         'video_explanation_sub',
-#         'execution_time'
-#     ]
-#     result_dict = {keys[i]: result_list[i] for i in range(len(keys))}
-#     # Extract JSON data
-#     # json_start = result.find('{')
-#     # json_end = result.rfind('}') + 1
-#     # json_data = result[json_start:json_end]
-#     print('result_dict')
-#     print(result_dict)
-#     return result_dict
-#     # try:
-#     #     result = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT, text=True)
-#     #     print('--result--')
-#     #     print(result)
-#     #     json_start = result.find('{')
-#     #     json_end = result.rfind('}') + 1
-#     #     json_data = result[json_start:json_end]
-#     #     print('--json_data--')
-#     #     print(json_data)
-#     #     result_dict = json.loads(json_data)
-#     #     print('--result_dict--')
-#     #     print(result_dict)
-#     #     return jsonify(result_dict), 200
-#     # except subprocess.CalledProcessError as e:
-#     #     error_message = f"Error executing command: {e.output}"
-#     #     print('--error--')
-#     #     print(error_message)
-#     #     return jsonify({"error": error_message}), 500
-#     # try:
-#         # result = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT, text=True)
-#     #     result = subprocess.check_output(command, shell=True, text=True).strip()
-#     #     result_list = result.split(', ')
-#     #     keys = [
-#     #         'date_time',
-#     #         'path_video',
-#     #         'capacity',
-#     #         'time',
-#     #         'sourceLanguage',
-#     #         'audio_original',
-#     #         'srt_original',
-#     #         'audio_filtered',
-#     #         'srt_translated',
-#     #         'srt_labeled',
-#     #         'audio_described',
-#     #         'audio_overlay_described',
-#     #         'videoSubtitle',
-#     #         'video_explanation',
-#     #         'video_explanation_sub',
-#     #         'execution_time'
-#     #     ]
-#     #     result_dict = {keys[i]: result_list[i] for i in range(len(keys))}
-#     #     # Extract JSON data
-#     #     # json_start = result.find('{')
-#     #     # json_end = result.rfind('}') + 1
-#     #     # json_data = result[json_start:json_end]
-#     #     print('result_dict')
-#     #     print(result_dict)
-#     #     return result_dict
-#     # except subprocess.CalledProcessError as e:
-#     #     error_message = f"Error executing command: {e.output}"
-#     #     print('--error--')
-#     #     print(error_message)
-        
-#     #     return jsonify({"error": error_message}), 500
-
-
-
-# if __name__ == '__main__':
-#     app.run(port=6000) 
-#     app.run(debug=True)
-# # --------------------------------END--------------------------------
-# # {
-# #     "date_time": "20240305_030921",    
-# #     "path_video": "../public/videos/7c5e00a5.mp4",
-# #     "capacity": "10269",
-# #     "time": "264.06",
-# #     "sourceLanguage": "en",
-# #     "audio_original": "../public/videos/7c5e00a5.wav",
-# #     "srt_original": "../public/videos/7c5e00a5_output.srt",
-# #     "audio_filtered": "../public/videos/7c5e00a5_output.wav",
-# #     "srt_translated": "../public/videos/7c5e00a5_output_translated.srt",      
-# #     "srt_labeled": "../public/videos/7c5e00a5_output_translated_gender_labeled.srt",
-# #     "audio_described": "../public/videos/7c5e00a5_output_translated_gender_labeled_output.wav",
-# #     "audio_overlay_described": "../public/videos/7c5e00a5_audiodescribed.wav",
-# #     "videoSubtitle": "../public/videos/7c5e00a5_subtitle.mp4",
-# #     "video_explanation": "../public/videos/7c5e00a5_audiodescribed.mp4",      
-# #     "video_explanation_sub": "../public/videos/7c5e00a5_audiodescribed_explanation.mp4",
-# #     "execution_time": "261.463369"     
-# # }
-
-# # --json_data--
-# # {
-# #     "date_time": "20240305_030921",    
-# #     "path_video": "../public/videos/7c5e00a5.mp4",
-# #     "capacity": "10269",
-# #     "time": "264.06",
-# #     "sourceLanguage": "en",
-# #     "audio_original": "../public/videos/7c5e00a5.wav",
-# #     "srt_original": "../public/videos/7c5e00a5_output.srt",
-# #     "audio_filtered": "../public/videos/7c5e00a5_output.wav",
-# #     "srt_translated": "../public/videos/7c5e00a5_output_translated.srt",      
-# #     "srt_labeled": "../public/videos/7c5e00a5_output_translated_gender_labeled.srt",
-# #     "audio_described": "../public/videos/7c5e00a5_output_translated_gender_labeled_output.wav",
-# #     "audio_overlay_described": "../public/videos/7c5e00a5_audiodescribed.wav",
-# #     "videoSubtitle": "../public/videos/7c5e00a5_subtitle.mp4",
-# #     "video_explanation": "../public/videos/7c5e00a5_audiodescribed.mp4",      
-# #     "video_explanation_sub": "../public/videos/7c5e00a5_audiodescribed_explanation.mp4",
-# #     "execution_time": "261.463369"     
-# # }
-# # --result_dict--
-# # {'date_time': '20240305_030921', 'path_video': '../public/videos/7c5e00a5.mp4', 'capacity': '10269', 'time': '264.06', 'sourceLanguage': 'en', 'audio_original': '../public/videos/7c5e00a5.wav', 'srt_original': '../public/videos/7c5e00a5_output.srt', 'audio_filtered': '../public/videos/7c5e00a5_output.wav', 'srt_translated': '../public/videos/7c5e00a5_output_translated.srt', 'srt_labeled': '../public/videos/7c5e00a5_output_translated_gender_labeled.srt', 'audio_described': '../public/videos/7c5e00a5_output_translated_gender_labeled_output.wav', 'audio_overlay_described': '../public/videos/7c5e00a5_audiodescribed.wav', 'videoSubtitle': '../public/videos/7c5e00a5_subtitle.mp4', 'video_explanation': '../public/videos/7c5e00a5_audiodescribed.mp4', 'video_explanation_sub': '../public/videos/7c5e00a5_audiodescribed_explanation.mp4', 'execution_time': '261.463369'}
-    
-
-# #     {
-# #     "date_time": "20240305_052828",
-# #     "path_video": "../public/videos/0eb55100.mp4",
-# #     "capacity": "10269",
-# #     "time": "264.06",
-# #     "sourceLanguage": "auto",
-# #     "audio_original": "../public/videos/0eb55100.wav",
-# #     "srt_original": "../public/videos/0eb55100.srt",
-# #     "audio_filtered": "../public/videos/0eb55100.wav",
-# #     "srt_translated": "../public/videos/0eb55100_translated.srt",
-# #     "srt_labeled": "../public/videos/0eb55100_translated_gender_labeled.srt",
-# #     "audio_described": "../public/videos/0eb55100_translated_gender_labeled_output.wav",
-# #     "audio_overlay_described": "../public/videos/0eb55100_audiodescribed.wav",
-# #     "videoSubtitle": "../public/videos/0eb55100_subtitle.mp4",
-# #     "video_explanation": "../public/videos/0eb55100_audiodescribed.mp4",  
-# #     "video_explanation_sub": "../public/videos/0eb55100_audiodescribed_explanation.mp4",
-# #     "execution_time": "729.340097"
-# # }
-    
-# #     {
-# #     "date_time": "20240305_054449",
-# #     "path_video": "../public/videos/682affdf.mp4",
-# #     "capacity": "10269",
-# #     "time": "264.06",
-# #     "sourceLanguage": "en",
-# #     "audio_original": "../public/videos/682affdf.wav",
-# #     "srt_original": "../public/videos/682affdf_output.srt",
-# #     "audio_filtered": "../public/videos/682affdf_output.wav",
-# #     "srt_translated": "../public/videos/682affdf_output_translated.srt",  
-# #     "srt_labeled": "../public/videos/682affdf_output_translated_gender_labeled.srt",
-# #     "audio_described": "../public/videos/682affdf_output_translated_gender_labeled_output.wav",
-# #     "audio_overlay_described": "../public/videos/682affdf_audiodescribed.wav",
-# #     "videoSubtitle": "../public/videos/682affdf_subtitle.mp4",
-# #     "video_explanation": "../public/videos/682affdf_audiodescribed.mp4",  
-# #     "video_explanation_sub": "../public/videos/682affdf_audiodescribed_explanation.mp4",
-# #     "execution_time": "217.623877"
-# # }
-
-from flask import Flask, request, jsonify
+from pathlib import Path
 import subprocess
-import json
-import re
+import threading
+from flask import Flask, request, jsonify
+from security import authorized, load_env, filename, language, choice, media_path, run_script
+
+HERE = Path(__file__).resolve().parent
+load_env(HERE.parent / ".env")
 app = Flask(__name__)
+app.config["MAX_CONTENT_LENGTH"] = 1024 * 1024
+job_lock = threading.Lock()
 
-@app.route('/api/createSubtitleV1', methods=['POST'])
-def subtitlev1():
-    data = request.get_json()
-    video = data.get('video')
-    sourceLanguage = data.get('sourceLanguage')
-    rate = data.get('rate')
-    volume = data.get('volume')
-    gender = data.get('gender')
-    noise = data.get('noise')
-    retainSound = data.get('retainSound')
-    adSubtitle = data.get('adSubtitle')
-    type = data.get('type')
+@app.before_request
+def authenticate_worker():
+    if not authorized(request.headers.get("X-Service-Token")):
+        return jsonify(error="Worker authentication required"), 401
 
-    if video.startswith('https://www.youtube.com'):
-        command = f'python3 {type}.py {video}'
+@app.errorhandler(ValueError)
+def invalid_input(error):
+    return jsonify(error=str(error)), 400
+
+@app.errorhandler(subprocess.SubprocessError)
+def processing_failed(error):
+    app.logger.warning("Media processing failed (%s)", type(error).__name__)
+    return jsonify(error="Media processing failed"), 502
+
+@app.errorhandler(OSError)
+def file_error(error):
+    return jsonify(error="Media file is unavailable"), 400
+
+
+from security import youtube_url
+import json
+
+@app.post("/api/createSubtitleV1")
+def subtitle():
+    data = request.get_json() or {}
+    kind = choice(data.get("type"), {"google-cloud", "openai-whisper"})
+    video = data.get("video")
+    if not isinstance(video, str):
+        raise ValueError("Invalid video")
+    if video.startswith("https://"):
+        source = youtube_url(video)
     else:
-        command = f'python3 {type}.py ../public/videos/{video}'
-    
-    if sourceLanguage is not None:
-        command += f' --l_in {sourceLanguage}'
-    if rate is not None:
-        command += f' -r {rate}'
-    if volume is not None:
-        command += f' -v {volume}'
-    if gender is not None:
-        command += f' --gender {gender}'
-    if noise is not None:
-        command += f' -noise={noise}'
-    if adSubtitle is not None:
-        command += f' --ad_subtitle_en={adSubtitle}'
-    if retainSound is not None:
-        command += f' --retain_sound={retainSound}'
-    print('command')
-    print(command)
+        video = filename(video)
+        if not media_path(HERE.parent / "public/videos", video, ".mp4").is_file():
+            raise ValueError("Video not found")
+        source = "../public/videos/" + video
+    args = [source, "--l_in", language(data.get("sourceLanguage", "auto"))]
+    for field, flag in [("rate", "-r"), ("volume", "-v")]:
+        value = str(data.get(field, "auto"))
+        if value != "auto" and (not value.isdigit() or not 0 <= int(value) <= 200):
+            raise ValueError("Invalid voice option")
+        args += [flag, value]
+    args += ["--gender", choice(data.get("gender", "auto"), {"auto", "male", "female"})]
+    for field, flag in [("noise", "-noise"), ("adSubtitle", "--ad_subtitle_en"), ("retainSound", "--retain_sound")]:
+        value = data.get(field, False)
+        if not isinstance(value, bool):
+            raise ValueError("Invalid boolean processing option")
+        args += [flag + "=" + str(value)]
+    if not job_lock.acquire(blocking=False):
+        return jsonify(error="Worker is busy"), 429
     try:
-        result = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT, text=True)
-        json_start = result.find('{')
-        json_end = result.rfind('}') + 1
-        json_data = result[json_start:json_end]
+        output = run_script(HERE, kind + ".py", args)
+        decoder = json.JSONDecoder()
+        for pos, char in enumerate(output):
+            if char == "{":
+                try:
+                    value, _ = decoder.raw_decode(output[pos:])
+                    if isinstance(value, dict) and "date_time" in value:
+                        return jsonify(value)
+                except ValueError:
+                    pass
+        raise ValueError("Unexpected worker result")
+    finally:
+        job_lock.release()
 
-        # Tìm vị trí của dấu `{` đầu tiên trong chuỗi JSON
-        first_bracket_index = json_data.find("{")
-
-        # Nếu tìm thấy dấu `{` đầu tiên, tiếp tục tìm vị trí của dấu `}` đầu tiên
-        if first_bracket_index != -1:
-            bracket_count = 0
-            for i in range(first_bracket_index, len(json_data)):
-                if json_data[i] == '{':
-                    bracket_count += 1
-                elif json_data[i] == '}':
-                    bracket_count -= 1
-                    if bracket_count == 0:
-                        last_bracket_index = i + 1
-                        break
-
-        # Nếu tìm thấy cả dấu `{` đầu tiên và `}` đầu tiên, chỉ lấy phần JSON
-        if first_bracket_index != -1 and last_bracket_index != -1:
-            json_data = json_data[first_bracket_index:last_bracket_index]
-
-        print('json_data:')
-        print(json_data)
-        print('json_data:')
-        # Parse chuỗi JSON thành dictionary
-        result_dict = json.loads(json_data)
-        print('result_dict:')
-        print(result_dict)
-        print('result_dict:')
-
-        return jsonify(result_dict), 200
-    except subprocess.CalledProcessError as e:
-        error_message = f"Error executing command: {e.output}"
-        return jsonify({"error": error_message}), 500
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-if __name__ == '__main__':
-    app.run(port=6000) 
-    app.run(debug=True)
-
-
-
-
-
-
-
-
+if __name__ == "__main__":
+    app.run(host="127.0.0.1", port=6000)

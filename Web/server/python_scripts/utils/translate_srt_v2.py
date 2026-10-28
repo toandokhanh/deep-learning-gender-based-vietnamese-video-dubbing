@@ -13,7 +13,7 @@ def translate_text(text, dest_lang, api_key):
         "q": text,
         "target": dest_lang
     }
-    response = requests.post(url, params=params)
+    response = requests.post(url, params=params, timeout=60)
     if response.status_code == 200:
         translated_text = response.json()["data"]["translations"][0]["translatedText"]
         return translated_text
@@ -45,7 +45,13 @@ def translate_and_save_srt(file_path, dest_lang='vi', api_key=None):
 
     return output_file
 
-# Example usage
-api_key = "REDACTED_REVOKE_OLD_KEY"
-translated_srt_path = translate_and_save_srt('f76326c7_phap.srt', api_key=api_key)
-print(f"Translated SRT saved at: {translated_srt_path}")
+if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser(description="Translate an SRT file with Google Translation")
+    parser.add_argument("source")
+    parser.add_argument("--language", default="vi")
+    args = parser.parse_args()
+    key = os.environ.get("GOOGLE_TRANSLATE_API_KEY")
+    if not key:
+        parser.error("Set GOOGLE_TRANSLATE_API_KEY")
+    print(translate_and_save_srt(args.source, args.language, key))

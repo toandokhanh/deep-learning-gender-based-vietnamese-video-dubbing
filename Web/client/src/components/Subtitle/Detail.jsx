@@ -11,7 +11,7 @@ function SubtitleDetail() {
   const navigate = useNavigate();
   const params = useParams();
   const [detailResult, setDetailResult] = useState();
-  
+
   useEffect(() => {
     axios.get(`${apiUrl}/video/get/subtitle/detail/${params.id}`)
       .then((response) => {
@@ -22,10 +22,10 @@ function SubtitleDetail() {
         console.error(error);
       });
   }, []);
-  
+
   if (!detailResult) return <></>
   const {videoSubtitle, video_explanation, video_explanation_sub, srt_original, srt_translated, srt_labeled, audio_original, audio_filtered, audio_described, audio_overlay_described, execution_time, type} = detailResult.result
-  
+
   const videoDelete = async () => {
     try {
       const response = await axios.delete(`${apiUrl}/video/delete/${params.id}`);
@@ -35,7 +35,7 @@ function SubtitleDetail() {
       }
     } catch (error) {
       console.error('Error:', error);
-      throw error; 
+      throw error;
     }
   }
   return (
@@ -48,7 +48,7 @@ function SubtitleDetail() {
             <div className="container" style={{ display: 'flex'}}>
                 <div className="left" >
                 <h4>Video gốc</h4>
-                <video className='video'
+                <video crossOrigin="use-credentials" className='video'
                     id="my-video-player"
                     style={{ border: '3px solid black' }}
                     width="700"
@@ -62,7 +62,7 @@ function SubtitleDetail() {
                 </video>
                 <br/>
                 <h4>Video phụ đề</h4>
-                <video className='video'
+                <video crossOrigin="use-credentials" className='video'
                     id="my-video-player"
                     style={{ border: '3px solid black' }}
                     width="700"
@@ -80,12 +80,12 @@ function SubtitleDetail() {
                     style={{
                     cursor: 'pointer',
                     backgroundColor: '#563D7C',
-                    color: '#ffffff', 
+                    color: '#ffffff',
                     }}
                     data-name="filename"
                 >
-                    <a 
-                    style={{color: '#ffffff', textDecoration:'none', marginTop:'20px'}} 
+                    <a
+                    style={{color: '#ffffff', textDecoration:'none', marginTop:'20px'}}
                     href={`${SUBTITLE_FILE_API}/${srt_translated}`}>
                     Dowload SRT file
                     </a>
@@ -93,7 +93,7 @@ function SubtitleDetail() {
                 </div>
                 <br/>
                 <h4>Video thuyết minh\lồng tiếng</h4>
-                <video className='video'
+                <video crossOrigin="use-credentials" className='video'
                     id="my-video-player"
                     style={{ border: '3px solid black' }}
                     width="700"
@@ -111,12 +111,12 @@ function SubtitleDetail() {
                     style={{
                     cursor: 'pointer',
                     backgroundColor: '#563D7C',
-                    color: '#ffffff', 
+                    color: '#ffffff',
                     }}
                     data-name="filename"
                 >
-                    <a 
-                    style={{color: '#ffffff', textDecoration:'none', marginTop:'20px'}} 
+                    <a
+                    style={{color: '#ffffff', textDecoration:'none', marginTop:'20px'}}
                     href={`${SUBTITLE_FILE_API}/${srt_labeled}`}>
                     Dowload SRT file
                     </a>
@@ -126,7 +126,7 @@ function SubtitleDetail() {
                 { video_explanation_sub && (
                   <div>
                     <h4>Video thuyết minh\lồng tiếng có phụ đề gốc</h4>
-                    <video className='video'
+                    <video crossOrigin="use-credentials" className='video'
                         id="my-video-player"
                         style={{ border: '3px solid black' }}
                         width="700"
@@ -144,12 +144,12 @@ function SubtitleDetail() {
                         style={{
                         cursor: 'pointer',
                         backgroundColor: '#563D7C',
-                        color: '#ffffff', 
+                        color: '#ffffff',
                         }}
                         data-name="filename"
                     >
-                        <a 
-                        style={{color: '#ffffff', textDecoration:'none', marginTop:'20px'}} 
+                        <a
+                        style={{color: '#ffffff', textDecoration:'none', marginTop:'20px'}}
                         href={`${SUBTITLE_FILE_API}/${srt_original}`}>
                         Dowload SRT file
                         </a>
@@ -195,7 +195,7 @@ function SubtitleDetail() {
                         style={{
                         cursor: 'pointer',
                         backgroundColor: '#563D7C',
-                        color: '#ffffff', 
+                        color: '#ffffff',
                         }}
                         data-name="filename"
                         onClick={videoDelete}
@@ -207,7 +207,7 @@ function SubtitleDetail() {
             </div>
             </div>
             <br/>
-          
+
     </>
   );
 }

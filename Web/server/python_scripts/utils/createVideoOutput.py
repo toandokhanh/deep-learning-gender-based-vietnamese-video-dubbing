@@ -1,3 +1,5 @@
+import subprocess
+import shlex
 import os
 
 def createAudiodescribed(file_in, file_srt):
@@ -11,7 +13,7 @@ def createAudiodescribed(file_in, file_srt):
     # Tùy chỉnh phụ đề với back ground màu đen và chữ trắng
     subtitle_options = "force_style='Fontsize=20,PrimaryColour=&H00FFFFFF,BackColour=&H80000000,BorderStyle=3,Outline=1,Shadow=0'"
     # Sử dụng ffmpeg để thêm phụ đề với các tùy chỉnh trên
-    os.system(f'ffmpeg -y -i "{file_in}" -vf "subtitles=\'{file_srt}\':{subtitle_options},scale=1280:720" "{file_out}"')
+    subprocess.run(shlex.split(f'''ffmpeg -y -i "{file_in}" -vf "subtitles='{file_srt}':{subtitle_options},scale=1280:720" "{file_out}"'''), check=True, timeout=1800)
 
     return file_out
 
@@ -27,7 +29,7 @@ def createSubtitle(file_in, file_srt):
     subtitle_options = "force_style='Fontsize=20,PrimaryColour=&H00FFFFFF,BackColour=&H80000000,BorderStyle=3,Outline=1,Shadow=0'"
 
     # Sử dụng ffmpeg để thêm phụ đề với các tùy chỉnh trên
-    os.system(f'ffmpeg -y -i "{file_in}" -vf "subtitles=\'{file_srt}\':{subtitle_options},scale=1280:720" "{file_out}"')
+    subprocess.run(shlex.split(f'''ffmpeg -y -i "{file_in}" -vf "subtitles='{file_srt}':{subtitle_options},scale=1280:720" "{file_out}"'''), check=True, timeout=1800)
 
     return file_out
 # Gọi hàm với các tham số

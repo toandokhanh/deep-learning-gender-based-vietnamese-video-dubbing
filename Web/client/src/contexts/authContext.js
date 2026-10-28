@@ -1,5 +1,6 @@
 import React, { createContext, useReducer, useEffect } from 'react';
 import axios from 'axios';
+axios.defaults.withCredentials = true;
 import { authReducer } from '../reducers/authReducer';
 import { apiUrl, LOCAL_STORAGE_TOKEN_NAME } from './constant';
 import setAuthToken from '../utils/setAuthToken'
@@ -12,7 +13,7 @@ const AuthContextProvider = ({ children }) => {
   const [authState, dispatch] = useReducer(authReducer, {
     authLoading: true,
     isAuthenticated: false,
-    user: null, 
+    user: null,
   });
 
   // Authenticate user
@@ -76,7 +77,9 @@ const AuthContextProvider = ({ children }) => {
 		}
 	}
   // Logout
-	const logoutUser = () => {
+	const logoutUser = async () => {
+        await axios.post(`${apiUrl}/auth/logout`);
+        setAuthToken(null);
 		localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
 		dispatch({
 			type: 'SET_AUTH',

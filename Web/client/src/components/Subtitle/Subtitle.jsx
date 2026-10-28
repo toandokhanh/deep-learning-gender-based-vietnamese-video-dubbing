@@ -53,7 +53,8 @@ function Subtitle() {
     const uploadVideoAndGetFileName = async (formData) => {
       try {
         const response = await fetch(`${apiUrl}/upload/video`, {
-          method: 'POST',
+          method: 'POST', credentials: 'include',
+      headers: { Authorization: axios.defaults.headers.common['Authorization'] || '' },
           body: formData,
         });
         const data = await response.json();
@@ -96,7 +97,7 @@ function Subtitle() {
       } catch (error) {
         console.error('Error:', error);
         setLoading(false);
-      } 
+      }
     } catch (error) {
       console.error('Error during video upload:', error);
     }
@@ -197,8 +198,8 @@ function Subtitle() {
             </Form.Group>
             <br/>
             <Form.Group>
-              <Form.Check 
-                type="checkbox" 
+              <Form.Check
+                type="checkbox"
                 label="Tạo video thuyết minh có phụ đề ngôn ngữ gốc"
                 checked={adSubtitle}
                 onChange={(e) => setAdSubtitle(e.target.checked)}
@@ -207,8 +208,8 @@ function Subtitle() {
 
             <br/>
             <Form.Group>
-              <Form.Check 
-                type="checkbox" 
+              <Form.Check
+                type="checkbox"
                 label="Giử lại âm thanh gốc của video (Thuyết minh)"
                 checked={retainSound}
                 onChange={(e) => setRetainSound(e.target.checked)}
@@ -218,8 +219,8 @@ function Subtitle() {
 
             <br/>
             <Form.Group>
-              <Form.Check 
-                type="checkbox" 
+              <Form.Check
+                type="checkbox"
                 label="Loại bỏ tiếng ồn (tiền xử lý âm thanh)"
                 checked={noise}
                 onChange={(e) => setNoise(e.target.checked)}

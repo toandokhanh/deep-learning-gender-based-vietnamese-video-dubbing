@@ -19,8 +19,8 @@ from googletrans import Translator
 import pysrt
 import six
 
-GOOGLE_SPEECH_API_KEY = "REDACTED_REVOKE_OLD_KEY"
-GOOGLE_SPEECH_API_URL = "http://www.google.com/speech-api/v2/recognize?client=chromium&lang={lang}&key={key}" # pylint: disable=line-too-long
+GOOGLE_SPEECH_API_KEY = os.environ.get("GOOGLE_SPEECH_API_KEY", "")
+GOOGLE_SPEECH_API_URL = "https://www.google.com/speech-api/v2/recognize?client=chromium&lang={lang}&key={key}" # pylint: disable=line-too-long
 DEFAULT_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
 
 
@@ -365,7 +365,7 @@ class SpeechRecognizer(object):
                 headers = {"Content-Type": "audio/x-flac; rate=%d" % self.rate}
 
                 try:
-                    resp = requests.post(url, data=data, headers=headers)
+                    resp = requests.post(url, data=data, headers=headers, timeout=60)
                 except requests.exceptions.ConnectionError:
                     continue
 
@@ -542,11 +542,11 @@ def entries_generator(srt_file):
 #             fail_to_translate = translated_subtitle[-1] == '\n'
 #             while fail_to_translate:
 #                 translated_subtitle = translator.translate(translated_subtitle, src=src, dest=dest).text
-                
+
 
 #             translated_subtitles.append(translated_subtitle if fail_to_translate else translated_subtitle + '\n')
 
-        
+
 
 #         yield number_in_sequence, timecode, translated_subtitles, count_failure, count_entries
 def translate(entries, src, dest):
@@ -575,7 +575,9 @@ def translate(entries, src, dest):
 
 
 def main(source_path,src_language,dst_language):
-    
+
+    if not GOOGLE_SPEECH_API_KEY:
+        raise RuntimeError("Set GOOGLE_SPEECH_API_KEY before using the legacy Speech API")
     audio_filename, audio_rate = extract_audio(source_path)
 
     regions = find_speech_regions(audio_filename)
@@ -614,7 +616,7 @@ def main(source_path,src_language,dst_language):
     formatted_subtitles = formatter(timed_subtitles)
 
 
-   
+
     base, ext = os.path.splitext(source_path)
     dest = "{base}.{format}".format(base=base, format='srt')
 
@@ -652,7 +654,7 @@ def main(source_path,src_language,dst_language):
                     pbar.update(e)
             pbar.finish()
 
-        
+
         print("Phụ đề được tạo với ngôn ngữ {}       : {}".format(src_language,dest))
         print('Phụ đề đã được dịch với ngôn ngữ {}   : {}' .format(dst_language,translated_file))
         # print('Tổng số dòng đã được tạo              : {0}/{1}'.format(count_failure, count_entries))

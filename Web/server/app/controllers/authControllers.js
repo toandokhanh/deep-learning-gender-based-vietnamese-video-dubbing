@@ -20,7 +20,7 @@ class AuthController {
         const {firstname, lastname, username, password} = req.body;
         // Simple validation
         const fullname = firstname + ' ' + lastname;
-        if (!username || !password)
+        if (typeof username !== 'string' || !/^[A-Za-z0-9_.-]{3,64}$/.test(username) || typeof password !== 'string' || password.length < 8 || password.length > 128)
             return res
                 .status(400)
                 .json({ success: false, message: 'Missing username or password' })
@@ -38,24 +38,25 @@ class AuthController {
             // Return token
             const accessToken = jwt.sign(
                 { userId: newUser._id },
-                process.env.ACCESS_TOKEN_SECRET
+                process.env.ACCESS_TOKEN_SECRET, { algorithm: 'HS256', expiresIn: '1h' }
             )
+            res.cookie('session_token', accessToken, { httpOnly: true, sameSite: 'strict', secure: process.env.NODE_ENV === 'production', maxAge: 3600000, path: '/' });
             res.json({
                 success: true,
                 message: 'User created successfully',
                 accessToken
             })
-                
+
         } catch (error) {
             console.log(error);
             res.status(500).json({success: false, message:'Internal Server Error'});
         }
-            
+
     }
     async login(req, res){
         const {username, password} = req.body;
         // Simple validation
-        if (!username || !password)
+        if (typeof username !== 'string' || !/^[A-Za-z0-9_.-]{3,64}$/.test(username) || typeof password !== 'string' || password.length < 8 || password.length > 128)
             return res
                 .status(400)
                 .json({ success: false, message: 'Missing username or password' })
@@ -74,15 +75,16 @@ class AuthController {
             // Return token
             const accessToken = jwt.sign(
                 { userId: user._id },
-                process.env.ACCESS_TOKEN_SECRET
+                process.env.ACCESS_TOKEN_SECRET, { algorithm: 'HS256', expiresIn: '1h' }
             )
 
+            res.cookie('session_token', accessToken, { httpOnly: true, sameSite: 'strict', secure: process.env.NODE_ENV === 'production', maxAge: 3600000, path: '/' });
             res.json({
                 success: true,
                 message: 'User logged in successfully',
                 accessToken
             })
-            
+
         } catch (error) {
             console.log(error);
             res.status(500).json({success: false, message:'Internal Server Error'});

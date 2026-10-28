@@ -1,3 +1,5 @@
+import subprocess
+import shlex
 import os
 from typing import Iterator, TextIO
 from moviepy.editor import VideoFileClip
@@ -65,9 +67,9 @@ def mp4_to_wav(filename):
     base_path, file_name = os.path.split(filename)
     name = os.path.splitext(file_name)[0]
     output = os.path.join(base_path, f"{name}.wav")
-    
-    os.system(f'ffmpeg -i {filename} -ar 44100 {output}')
-    
+
+    subprocess.run(shlex.split(f'ffmpeg -i {filename} -ar 44100 {output}'), check=True, timeout=1800)
+
     return output
 
 
@@ -81,7 +83,7 @@ def noise_deepfilternet(file):
     print('name')
     print(name)
     output = os.path.join(base_path, f"{name}_DeepFilterNet3.wav")
-    os.system('deepFilter {} -o {}'.format(file, base_path))
+    subprocess.run(shlex.split('deepFilter {} -o {}'.format(file, base_path)), check=True, timeout=1800)
     print("Đã giảm tiếng ồn DeepFilterNet")
     print('')
     return output

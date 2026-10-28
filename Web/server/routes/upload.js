@@ -1,40 +1,33 @@
-//upload.js
 const express = require('express');
-const router = express.Router();
 const multer = require('multer');
 const fs = require('fs');
-const crypto = require('crypto'); // Import the crypto module for generating random strings
-
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
-
-router.post('/video', upload.single('inputFile'), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ error: 'No file uploaded' });
-  }
-  
-  const videoData = req.file.buffer;
-  const originalFileName = req.file.originalname;
-  const fileExtension = originalFileName.split('.').pop(); // Extract file extension
-  const randomString = crypto.randomBytes(4).toString('hex'); // Generate a random 8-character string
-
-  const fileName = `${randomString}_${originalFileName}`; // Append random string to the original filename
-  const uploadPath = './public/videos/' + fileName;
-  
-  if (req.file.mimetype !== 'video/mp4') {
-    return res.status(400).json({ error: 'File is not a video MP4' });
-  }
-
-  fs.writeFile(uploadPath, videoData, (error) => {
-    if (error) {
-      console.error('Error saving video:', error);
-      return res.status(500).json({ error: 'Error saving video' });
-    }
-
-    console.log('Video saved successfully');
-    console.log(uploadPath);
-    res.status(200).json({ message: 'Video uploaded and saved', fileName: fileName  });
+const path = require('path');
+const crypto = require('crypto');
+const verifyToken = require('../app/middleware/auth');
+const { mediaRoot, ownerRoot, rateLimit } = require('../util/security');
+const router = express.Router();
+fs.mkdirSync(mediaRoot, { recursive: true });
+fs.mkdirSync(ownerRoot, { recursive: true });
+const upload = multer({
+  storage: multer.diskStorage({ destination: mediaRoot, filename: (req, file, cb) => cb(null, crypto.randomBytes(16).toString('hex') + '.mp4') }),
+  limits: { fileSize: 256 * 1024 * 1024, files: 1, fields: 0 },
+  fileFilter: (req, file, cb) => cb(null, file.mimetype === 'video/mp4' && path.extname(file.originalname).toLowerCase() === '.mp4'),
+}).single('inputFile');
+router.post('/video', verifyToken, rateLimit(5), (req, res) => {
+  upload(req, res, error => {
+    if (error || !req.file) return res.status(400).json({ error: 'Upload a single MP4 file, at most 256 MiB' });
+    let fd;
+    try {
+      fd = fs.openSync(req.file.path, 'r');
+      const header = Buffer.alloc(12);
+      const length = fs.readSync(fd, header, 0, 12, 0);
+      if (length < 12 || header.toString('ascii', 4, 8) !== 'ftyp') throw new Error('Invalid MP4 header');
+      fs.writeFileSync(path.join(ownerRoot, req.file.filename + '.owner'), String(req.userId), { flag: 'wx', mode: 0o600 });
+      return res.status(201).json({ message: 'Video uploaded', fileName: req.file.filename });
+    } catch {
+      fs.rmSync(req.file.path, { force: true });
+      return res.status(400).json({ error: 'Invalid video upload' });
+    } finally { if (fd !== undefined) fs.closeSync(fd); }
   });
 });
-
 module.exports = router;

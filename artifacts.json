@@ -1,0 +1,262 @@
+[
+  {
+    "path": "Gender-Classification/Code/AudioMNIST/nbs/models/export.pkl",
+    "bytes": 87816141,
+    "sha256": "5b7a1c3bb22d324403295272994c7d571109e59ab5b15bcda82fab7f9b903f23"
+  },
+  {
+    "path": "Gender-Classification/Code/AudioMNIST/nbs/models/model_3666_step1.pkl",
+    "bytes": 87498048,
+    "sha256": "f538c0c6a0494f9ac55b28161a52bd48bd6ab51328f0c409da0125da392647db"
+  },
+  {
+    "path": "Gender-Classification/Code/AudioMNIST/nbs/models/model_3666_step2.pkl",
+    "bytes": 87495936,
+    "sha256": "a1070207347cabbf6317660e5b192ea5ca4660c34883e7fdbd0fee9d39a3ec03"
+  },
+  {
+    "path": "Gender-Classification/Code/AudioMNIST/nbs/models/resnet_model_step1.pkl",
+    "bytes": 87873918,
+    "sha256": "1a0029673546a318f64b24a613d49be7fdbd6aadb7ac28d08e515cb3bc65fab9"
+  },
+  {
+    "path": "Gender-Classification/Code/AudioMNIST/nbs/models/resnet_model_step2.pkl",
+    "bytes": 87846078,
+    "sha256": "61ab03887f850021da198ade8c53e70a6242b75b65d8cec9dd20bfb8d6486fef"
+  },
+  {
+    "path": "Gender-Classification/Code/AudioMNIST/nbs/models/vgg_model_step1.pkl",
+    "bytes": 61543077,
+    "sha256": "84f1a3c76460942678858daf4d0621d97fffd007047fda5b8437b63529c33782"
+  },
+  {
+    "path": "Gender-Classification/Code/AudioMNIST/nbs/models/vgg_model_step2.pkl",
+    "bytes": 61515237,
+    "sha256": "c7750240694d74d5ddd7ebf96342c720de5c148c890697065ac18287acdea4c3"
+  },
+  {
+    "path": "Gender-Classification/Code/CTU&COMMON/mel/model_mel_spectrogram.pkl",
+    "bytes": 87515750,
+    "sha256": "e2feb11dce56b2f4b878d06ada26cdf9077ee2fafbb70b4b356049f793f9f860"
+  },
+  {
+    "path": "Gender-Classification/Code/CTU&COMMON/mfcc/model_mfcc.pkl",
+    "bytes": 87517161,
+    "sha256": "c1d76264c8151330237a9025613ef3a06f1c9a02a7dd5be0de471654d76fb7d2"
+  },
+  {
+    "path": "Gender-Classification/Code/CTU&COMMON/mfcc_3d/mfcc_3d.pkl",
+    "bytes": 87513434,
+    "sha256": "992f2b82b699e14e38eab2cd5c8f2474349a3e5c02d0ac2cd627c01c6247fd82"
+  },
+  {
+    "path": "Gender-Classification/Code/CTU&COMMON/mfcc_resized_final/models/resnet34_step1.pkl",
+    "bytes": 87513594,
+    "sha256": "3fc8f296927250a549938eda5fb40e8757612406a9bc9704568a5f31a30743b6"
+  },
+  {
+    "path": "Gender-Classification/Code/CTU&COMMON/mfcc_resized_final/models/resnet34_step2.pkl",
+    "bytes": 87513594,
+    "sha256": "3fc8f296927250a549938eda5fb40e8757612406a9bc9704568a5f31a30743b6"
+  },
+  {
+    "path": "Gender-Classification/Code/CTU&COMMON/mfcc_resized_final/models/vgg16_step1.pkl",
+    "bytes": 87517464,
+    "sha256": "3b7626c19bf407edda5a64b7b1c410767916a6aa2ffd21e93c982c0ef8d39637"
+  },
+  {
+    "path": "Gender-Classification/Code/CTU&COMMON/mfcc_resized_final/models/vgg16_step2.pkl",
+    "bytes": 87514136,
+    "sha256": "baa92940c2524600e32a3f6bf9a3d782f4c155fc58c6b7c7015cc6bb50e4bbd0"
+  },
+  {
+    "path": "Gender-Classification/Code/RAVDESS/models/resnet34_step1.pkl",
+    "bytes": 87485158,
+    "sha256": "7bf994da0fd4a64fca3581ea0a6d54c9a460958468b0d47d2978db440e7d00bc"
+  },
+  {
+    "path": "Gender-Classification/Code/RAVDESS/models/resnet34_step2.pkl",
+    "bytes": 87483750,
+    "sha256": "50ffd5b7284c40cf1f2c57c0a0679f8475e74193fd7cf0b30385b275936908d5"
+  },
+  {
+    "path": "Gender-Classification/Code/RAVDESS/models/tmp0iqc88dt/_tmp.pth",
+    "bytes": 46905191,
+    "sha256": "13fe21f4d298d3808b26181afcb634707445ec6aabd308544b11c805e66f2824"
+  },
+  {
+    "path": "Gender-Classification/Code/RAVDESS/models/tmp7m6xmx4a/_tmp.pth",
+    "bytes": 87392647,
+    "sha256": "5f98986cf95629d529509a3ec259610ed118e24c6863b6559e23d03b6eb0fa1d"
+  },
+  {
+    "path": "Gender-Classification/Code/RAVDESS/models/tmpubjtexe4/_tmp.pth",
+    "bytes": 87392647,
+    "sha256": "714f8fbe28e22aa1abd7776c18e25907611d4d1eb27e4e0d2469ce94cac93ecf"
+  },
+  {
+    "path": "Gender-Classification/Code/RAVDESS/models/vgg16_step1.pkl",
+    "bytes": 87484447,
+    "sha256": "8ae8b791954b7c7f5302e3ee470f76966be515a0b0be9fc0c3dc2632c5c14793"
+  },
+  {
+    "path": "Gender-Classification/Code/RAVDESS/models/vgg16_step2.pkl",
+    "bytes": 87483103,
+    "sha256": "d94856bb18df87344acfc552f16f35582d3482183811875e3ab1476974db585c"
+  },
+  {
+    "path": "Gender-Classification/Code/TIMIT/models/resnet34_step1.pkl",
+    "bytes": 87552422,
+    "sha256": "fad6555ebb5280dc3c6314c2a650d8a66fea058d0c33a2957ac6dd4c4c93b493"
+  },
+  {
+    "path": "Gender-Classification/Code/TIMIT/models/resnet34_step2.pkl",
+    "bytes": 87546598,
+    "sha256": "f93b083a4977a15c6626dfc5c07c4703dcdc289d088687c175b3f8f668ccd78a"
+  },
+  {
+    "path": "Gender-Classification/Code/TIMIT/models/vgg16_step1.pkl",
+    "bytes": 87551647,
+    "sha256": "b1ffdcf85b64a69272d644fee0af0d600b8b785d762efbd15e9e733fe99d70ee"
+  },
+  {
+    "path": "Gender-Classification/Code/TIMIT/models/vgg16_step2.pkl",
+    "bytes": 87545887,
+    "sha256": "fa80487cafb65c0ae6b1b21860c30baec72eb41e05252e46a9cc73bb39315be7"
+  },
+  {
+    "path": "Gender-Classification/Results/experimental_results/AudioMNIST/models/resnet_model_step1.pkl",
+    "bytes": 87873918,
+    "sha256": "1a0029673546a318f64b24a613d49be7fdbd6aadb7ac28d08e515cb3bc65fab9"
+  },
+  {
+    "path": "Gender-Classification/Results/experimental_results/AudioMNIST/models/resnet_model_step2.pkl",
+    "bytes": 87846078,
+    "sha256": "61ab03887f850021da198ade8c53e70a6242b75b65d8cec9dd20bfb8d6486fef"
+  },
+  {
+    "path": "Gender-Classification/Results/experimental_results/AudioMNIST/models/vgg_model_step1.pkl",
+    "bytes": 61543077,
+    "sha256": "84f1a3c76460942678858daf4d0621d97fffd007047fda5b8437b63529c33782"
+  },
+  {
+    "path": "Gender-Classification/Results/experimental_results/AudioMNIST/models/vgg_model_step2.pkl",
+    "bytes": 61515237,
+    "sha256": "c7750240694d74d5ddd7ebf96342c720de5c148c890697065ac18287acdea4c3"
+  },
+  {
+    "path": "Gender-Classification/Results/experimental_results/CTU&COMMON/models/resnet34_step1.pkl",
+    "bytes": 87516858,
+    "sha256": "d172f9b5febfdd5dcafd187fe4f85875c0c253db26e00dad848cbd5f27710c21"
+  },
+  {
+    "path": "Gender-Classification/Results/experimental_results/CTU&COMMON/models/resnet34_step2.pkl",
+    "bytes": 87513594,
+    "sha256": "3fc8f296927250a549938eda5fb40e8757612406a9bc9704568a5f31a30743b6"
+  },
+  {
+    "path": "Gender-Classification/Results/experimental_results/CTU&COMMON/models/vgg16_step1.pkl",
+    "bytes": 87517464,
+    "sha256": "3b7626c19bf407edda5a64b7b1c410767916a6aa2ffd21e93c982c0ef8d39637"
+  },
+  {
+    "path": "Gender-Classification/Results/experimental_results/CTU&COMMON/models/vgg16_step2.pkl",
+    "bytes": 87514136,
+    "sha256": "baa92940c2524600e32a3f6bf9a3d782f4c155fc58c6b7c7015cc6bb50e4bbd0"
+  },
+  {
+    "path": "Gender-Classification/Results/experimental_results/RAVDESS/models/resnet34_step1.pkl",
+    "bytes": 87485158,
+    "sha256": "7bf994da0fd4a64fca3581ea0a6d54c9a460958468b0d47d2978db440e7d00bc"
+  },
+  {
+    "path": "Gender-Classification/Results/experimental_results/RAVDESS/models/resnet34_step2.pkl",
+    "bytes": 87483750,
+    "sha256": "50ffd5b7284c40cf1f2c57c0a0679f8475e74193fd7cf0b30385b275936908d5"
+  },
+  {
+    "path": "Gender-Classification/Results/experimental_results/RAVDESS/models/vgg16_step1.pkl",
+    "bytes": 87484447,
+    "sha256": "8ae8b791954b7c7f5302e3ee470f76966be515a0b0be9fc0c3dc2632c5c14793"
+  },
+  {
+    "path": "Gender-Classification/Results/experimental_results/RAVDESS/models/vgg16_step2.pkl",
+    "bytes": 87483103,
+    "sha256": "d94856bb18df87344acfc552f16f35582d3482183811875e3ab1476974db585c"
+  },
+  {
+    "path": "Gender-Classification/Results/experimental_results/TIMIT/models/resnet34_step1.pkl",
+    "bytes": 87552422,
+    "sha256": "fad6555ebb5280dc3c6314c2a650d8a66fea058d0c33a2957ac6dd4c4c93b493"
+  },
+  {
+    "path": "Gender-Classification/Results/experimental_results/TIMIT/models/resnet34_step2.pkl",
+    "bytes": 87546598,
+    "sha256": "f93b083a4977a15c6626dfc5c07c4703dcdc289d088687c175b3f8f668ccd78a"
+  },
+  {
+    "path": "Gender-Classification/Results/experimental_results/TIMIT/models/vgg16_step1.pkl",
+    "bytes": 87551647,
+    "sha256": "b1ffdcf85b64a69272d644fee0af0d600b8b785d762efbd15e9e733fe99d70ee"
+  },
+  {
+    "path": "Gender-Classification/Results/experimental_results/TIMIT/models/vgg16_step2.pkl",
+    "bytes": 87545887,
+    "sha256": "fa80487cafb65c0ae6b1b21860c30baec72eb41e05252e46a9cc73bb39315be7"
+  },
+  {
+    "path": "Gender-Classification/Results/scenario1/models/resnet34_step1.pkl",
+    "bytes": 87516858,
+    "sha256": "d172f9b5febfdd5dcafd187fe4f85875c0c253db26e00dad848cbd5f27710c21"
+  },
+  {
+    "path": "Gender-Classification/Results/scenario1/models/resnet34_step2.pkl",
+    "bytes": 87513594,
+    "sha256": "3fc8f296927250a549938eda5fb40e8757612406a9bc9704568a5f31a30743b6"
+  },
+  {
+    "path": "Gender-Classification/Results/scenario2/mel/model_mel_spectrogram.pkl",
+    "bytes": 87515750,
+    "sha256": "e2feb11dce56b2f4b878d06ada26cdf9077ee2fafbb70b4b356049f793f9f860"
+  },
+  {
+    "path": "Gender-Classification/Results/scenario2/mfcc/model_mfcc.pkl",
+    "bytes": 87517161,
+    "sha256": "c1d76264c8151330237a9025613ef3a06f1c9a02a7dd5be0de471654d76fb7d2"
+  },
+  {
+    "path": "Gender-Classification/Results/scenario2/mfcc_3d/mfcc_3d.pkl",
+    "bytes": 87513434,
+    "sha256": "992f2b82b699e14e38eab2cd5c8f2474349a3e5c02d0ac2cd627c01c6247fd82"
+  },
+  {
+    "path": "Gender-Classification/Results/scenario2/mfcc_resized_final/model_mfcc_resized.pkl",
+    "bytes": 87513594,
+    "sha256": "3fc8f296927250a549938eda5fb40e8757612406a9bc9704568a5f31a30743b6"
+  },
+  {
+    "path": "Web/server/python_scripts/pretrained_models/2stems/.probe",
+    "bytes": 2,
+    "sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3"
+  },
+  {
+    "path": "Web/server/python_scripts/pretrained_models/2stems/checkpoint",
+    "bytes": 67,
+    "sha256": "011c96b970c1f56137037924fe1a0f0851369b0ee6692e120aea798615326f48"
+  },
+  {
+    "path": "Web/server/python_scripts/pretrained_models/2stems/model.data-00000-of-00001",
+    "bytes": 78614080,
+    "sha256": "7747f9fd2c782306dbec1504360fbb645a097a48446f23486c3ff9c89bc11788"
+  },
+  {
+    "path": "Web/server/python_scripts/pretrained_models/2stems/model.index",
+    "bytes": 5244,
+    "sha256": "55661a09f79c86071fc7077b44b4cf1f01b6d82bbbb83ed94cb68a2f9944e378"
+  },
+  {
+    "path": "Web/server/python_scripts/pretrained_models/2stems/model.meta",
+    "bytes": 805575,
+    "sha256": "6e1f6d86a22bb452a58cb20e3de87b416f8a79e626ca223e20f763ab2d21ec95"
+  }
+]
